@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Internship.Projects\\Library_App\\Library_App.csproj": {}
+    "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Library.App.Backend\\Library_App\\Library_App.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Internship.Projects\\Library_App\\Library_App.csproj": {
+    "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Library.App.Backend\\Library_App\\Library_App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Internship.Projects\\Library_App\\Library_App.csproj",
+        "projectUniqueName": "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Library.App.Backend\\Library_App\\Library_App.csproj",
         "projectName": "Library_App",
-        "projectPath": "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Internship.Projects\\Library_App\\Library_App.csproj",
+        "projectPath": "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Library.App.Backend\\Library_App\\Library_App.csproj",
         "packagesPath": "C:\\Users\\Fatih YELBOĞA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Internship.Projects\\Library_App\\obj\\",
+        "outputPath": "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Library.App.Backend\\Library_App\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fatih YELBOĞA\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,20 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
