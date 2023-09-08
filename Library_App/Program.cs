@@ -1,4 +1,6 @@
 using Library_App.Configurations;
+using Library_App.Repositories;
+using Library_App.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Text.Json.Serialization;
@@ -32,6 +34,9 @@ builder.Services.AddControllers().AddJsonOptions(
 builder.Services.AddControllers().AddJsonOptions(
     options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
 );
+
+builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 
 var app = builder.Build();
 
