@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library_App.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20230907122342_FirstModel")]
-    partial class FirstModel
+    [Migration("20230912201130_RefreshToken")]
+    partial class RefreshToken
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -167,6 +167,25 @@ namespace Library_App.Migrations
                     b.ToTable("Files");
                 });
 
+            modelBuilder.Entity("Library_App.Models.RefreshToken", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Expiration")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId", "Token");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("Library_App.Models.SharingBooks", b =>
                 {
                     b.Property<int>("Id")
@@ -204,7 +223,6 @@ namespace Library_App.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("About")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BornDate")
@@ -230,6 +248,9 @@ namespace Library_App.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProfilId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -368,6 +389,16 @@ namespace Library_App.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Library_App.Models.RefreshToken", b =>
+                {
+                    b.HasOne("Library_App.Models.User", "User")
+                        .WithOne("RefreshToken")
+                        .HasForeignKey("Library_App.Models.RefreshToken", "UserId")
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Library_App.Models.SharingBooks", b =>
                 {
                     b.HasOne("Library_App.Models.Book", "Book")
@@ -447,6 +478,8 @@ namespace Library_App.Migrations
                     b.Navigation("FavoriteBooks");
 
                     b.Navigation("ReceiverBooks");
+
+                    b.Navigation("RefreshToken");
 
                     b.Navigation("SenderBooks");
 

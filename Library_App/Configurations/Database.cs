@@ -9,6 +9,7 @@ namespace Library_App.Configurations
 
         public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Writer> Writers { get; set; }
         public DbSet<Models.File> Files { get; set; }
         public DbSet<BookComments> BookComments { get; set; }
@@ -131,6 +132,13 @@ namespace Library_App.Configurations
                 .WithOne(f => f.BookContent)
                 .HasForeignKey<Book>(b => b.ContentId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+            // user - token relationship
+            modelBuilder.Entity<RefreshToken>()
+                .HasOne(rt => rt.User)
+                .WithOne(u => u.RefreshToken)
+                .HasForeignKey<RefreshToken>(rt => rt.UserId)
+                .OnDelete(deleteBehavior: DeleteBehavior.ClientSetNull);
         }
 
         public static void Seed(Database database)
@@ -159,6 +167,7 @@ namespace Library_App.Configurations
             {
                 Email = "fatihyelboga@gmail.com",
                 Password = "fatih123",
+                Role = Enumerations.Role.USER,
                 FirstName = "Fatih",
                 LastName = "YELBOĞA",
                 BornDate = new DateTime(2001, 01, 12),
@@ -169,6 +178,7 @@ namespace Library_App.Configurations
             {
                 Email = "berkaybayrak@gmail.com",
                 Password = "berkay123",
+                Role = Enumerations.Role.USER,
                 FirstName = "Berkay",
                 LastName = "YAPRAK",
                 BornDate = new DateTime(2000, 06, 18),

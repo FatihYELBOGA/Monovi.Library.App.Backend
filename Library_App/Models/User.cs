@@ -7,6 +7,7 @@ namespace Library_App.Models
         public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public Role Role { get; set; }
         public int? ProfilId { get; set; }
         public File? Profil { get; set; }
         public string FirstName { get; set; }
@@ -14,6 +15,7 @@ namespace Library_App.Models
         public DateTime BornDate { get; set; }
         public Gender Gender { get; set; }
         public string? About { get; set; }
+        public RefreshToken? RefreshToken { get; set; }
         public List<Book> Books { get; set; }
         public List<BookComments> BookComments { get; set; }
         public List<FavoriteBooks> FavoriteBooks { get; set; }

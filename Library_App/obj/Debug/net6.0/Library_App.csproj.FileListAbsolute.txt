@@ -117,3 +117,7 @@ C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\ob
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Debug\net6.0\Library_App.csproj.CopyComplete
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Debug\net6.0\Library_App.genruntimeconfig.cache
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Debug\net6.0\ref\Library_App.dll
+C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\bin\Debug\net6.0\Scrutor.dll
+C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
+C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll

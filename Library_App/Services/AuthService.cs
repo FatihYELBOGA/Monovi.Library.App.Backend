@@ -2,16 +2,71 @@
 using Library_App.DTO.Responses;
 using Library_App.Models;
 using Library_App.Repositories;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Library_App.Services
 {
     public class AuthService : IAuthService
     {
-        private IAuthRepository _authRepository;
 
-        public AuthService(IAuthRepository authRepository)
+        private readonly IAuthRepository _authRepository;
+        private readonly IConfiguration _configuration;
+
+        public AuthService(IAuthRepository authRepository, IConfiguration configuration)
         {
             _authRepository = authRepository;
+            _configuration = configuration;
+        }
+
+        public LoginResponse CreateRefreshToken(RefreshTokenRequest refreshTokenRequest)
+        {
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.Success = false;
+            loginResponse.JWTToken = null;
+            loginResponse.RefreshToken = null;
+            loginResponse.Id = null;
+            loginResponse.Username = null;
+            loginResponse.Role = null;
+            loginResponse.Message = "user id or refresh token is mistake!";
+
+            RefreshToken updatedRefreshToken =  _authRepository.CheckRefreshToken(refreshTokenRequest);
+            if (updatedRefreshToken!=null)
+            {
+                updatedRefreshToken.Token = CreateRefreshToken();
+                updatedRefreshToken.Expiration = DateTime.Now.AddHours(Convert.ToInt64(_configuration.GetSection("JWTConfig:refresh-token-expiration-hour").Value)); ;
+                _authRepository.UpdateRefreshToken(updatedRefreshToken);
+
+                loginResponse.Success = true;
+
+                string signingKey = _configuration.GetSection("JWTConfig:key").Value;
+                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
+                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+                var claims = new[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(updatedRefreshToken.UserId)),
+                    new Claim(JwtRegisteredClaimNames.Email, updatedRefreshToken.User.Email),
+                    new Claim(ClaimTypes.Role, updatedRefreshToken.User.Role.ToString())
+                };
+                var jwtSecurityToken = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.Now.AddHours(Convert.ToInt64(_configuration.GetSection("JWTConfig:token-expiration-hour").Value)),
+                    notBefore: DateTime.Now,
+                    signingCredentials: credentials
+                );
+
+                loginResponse.JWTToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                loginResponse.RefreshToken = updatedRefreshToken.Token;
+                loginResponse.Id = updatedRefreshToken.UserId;
+                loginResponse.Username = updatedRefreshToken.User.Email;
+                loginResponse.Role = updatedRefreshToken.User.Role;
+                loginResponse.Message = "successful refresh token";
+            } 
+
+            return loginResponse;
         }
 
         public LoginResponse Login(LoginRequest loginRequest)
@@ -21,15 +76,68 @@ namespace Library_App.Services
 
             if (foundUser == null) {
                 loginResponse.Success = false;
+                loginResponse.JWTToken = null;
                 loginResponse.Id = null;
+                loginResponse.Username = null;
+                loginResponse.Role = null;
                 loginResponse.Message = "username or password is mistake!";
             } else {
                 loginResponse.Success = true;
+
+                // create token
+                string signingKey = _configuration.GetSection("JWTConfig:key").Value;
+                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
+                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+                var claims = new[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(foundUser.Id)),
+                    new Claim(JwtRegisteredClaimNames.Email, foundUser.Email),
+                    new Claim(ClaimTypes.Role, foundUser.Role.ToString())
+                };
+                var jwtSecurityToken = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.Now.AddHours(Convert.ToInt64(_configuration.GetSection("JWTConfig:token-expiration-hour").Value)),
+                    notBefore: DateTime.Now,
+                    signingCredentials: credentials
+                );
+
+                loginResponse.JWTToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                loginResponse.RefreshToken = CreateRefreshToken();
                 loginResponse.Id = foundUser.Id;
-                loginResponse.Message = "username and password is invalid!";
+                loginResponse.Username = foundUser.Email;
+                loginResponse.Role = foundUser.Role;
+                loginResponse.Message = "successful login!";
+
+                RefreshToken foundRefreshToken = _authRepository.ExistRefreshToken(foundUser.Id);
+                if (foundRefreshToken != null)
+                {
+                    foundRefreshToken.Token = loginResponse.RefreshToken;
+                    foundRefreshToken.Expiration = DateTime.Now.AddHours(Convert.ToInt64(_configuration.GetSection("JWTConfig:refresh-token-expiration-hour").Value));
+                    _authRepository.UpdateRefreshToken(foundRefreshToken);
+                }
+                else
+                {
+                    RefreshToken addedRefreshToken = new RefreshToken()
+                    {
+                        UserId = foundUser.Id,
+                        Token = loginResponse.RefreshToken,
+                        Expiration = DateTime.Now.AddSeconds(30)
+                    };
+                    _authRepository.CreateRefreshToken(addedRefreshToken);
+                }
             }
 
             return loginResponse;
+        }
+
+        private string CreateRefreshToken()
+        {
+            byte[] number = new byte[32];
+            using (RandomNumberGenerator random = RandomNumberGenerator.Create())
+            {
+                random.GetBytes(number);
+                return Convert.ToBase64String(number);
+            }
         }
 
         public UserResponse Register(RegisterRequest registerRequest)
@@ -41,9 +149,10 @@ namespace Library_App.Services
             User addedUser = new User()
             {
                 Email = registerRequest.Email,
-                Password = registerRequest.Password,
+                Password = Convert.ToBase64String(Encoding.UTF8.GetBytes(registerRequest.Password)),
                 FirstName = registerRequest.FirstName,
-                LastName = registerRequest.LastName
+                LastName = registerRequest.LastName,
+                Role = Enumerations.Role.USER
             };
 
             User returnedUser = _authRepository.Register(addedUser);
@@ -52,7 +161,8 @@ namespace Library_App.Services
                 Id = returnedUser.Id,
                 Email = returnedUser.Email,
                 FirstName = returnedUser.FirstName,
-                LastName = returnedUser.LastName
+                LastName = returnedUser.LastName,
+                Role = returnedUser.Role
             };
         }
 

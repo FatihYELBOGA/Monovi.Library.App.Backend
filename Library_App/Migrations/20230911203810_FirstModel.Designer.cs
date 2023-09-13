@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library_App.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20230907131906_NullableAbout")]
-    partial class NullableAbout
+    [Migration("20230911203810_FirstModel")]
+    partial class FirstModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,6 +229,9 @@ namespace Library_App.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProfilId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
