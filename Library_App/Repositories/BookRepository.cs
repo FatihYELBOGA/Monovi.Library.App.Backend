@@ -1,5 +1,6 @@
 ﻿using Library_App.Configurations;
 using Library_App.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library_App.Repositories
 {
@@ -13,29 +14,50 @@ namespace Library_App.Repositories
             _database = database;
         }
 
-        public Book Create(Book book)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Book> GetAll()
         {
-            throw new NotImplementedException();
+            return _database.Books
+                .Include(b => b.Writer)
+                .Include(b => b.Photo)
+                .ToList();
         }
 
         public Book GetById(int id)
         {
-            throw new NotImplementedException();
+            return _database.Books
+                .Where(b => b.Id == id)
+                .Include(b => b.User)
+                .Include(b => b.Writer)
+                .Include(b => b.Photo)
+                .Include(b => b.Content)
+                .FirstOrDefault();
         }
 
-        public bool RemoveById(int id)
+        public Book Create(Book book)
         {
-            throw new NotImplementedException();
+            Book returnedBook = _database.Books.Add(book).Entity;
+            _database.SaveChanges();
+            return returnedBook;
         }
 
         public Book Update(Book book)
         {
-            throw new NotImplementedException();
+            Book returnedBook = _database.Update(book).Entity;
+            _database.SaveChanges();
+            return returnedBook;
+        }
+
+        public bool RemoveById(int id)
+        {
+            Book deletedBook = _database.Books.Where(b => b.Id == id).FirstOrDefault();
+            if(deletedBook != null)
+            {
+                _database.Books.Remove(deletedBook);
+                _database.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
 
     }

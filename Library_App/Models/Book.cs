@@ -13,9 +13,9 @@ namespace Library_App.Models
         public File? Photo { get; set; }
         public int? ContentId { get; set; }
         public File? Content { get; set; }
-        public BookType BookType { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public BookType BookType { get; set; }
         public int PageNumber { get; set; }
         public Language Language { get; set; }
         public List<BookComments> BookComments { get; set; }

@@ -18,22 +18,33 @@ namespace Library_App.Controllers
             _authService = authService;
         }
 
+        [HttpGet("/auth/token-validation")]
+        public bool CheckTokenIsValid([FromForm] string token)
+        {
+            return _authService.CheckTokenIsValid(token);
+        }
+
+        [HttpPost("/auth/refresh-token-validation")]
+        public bool CheckRefreshTokenIsValid([FromForm] RefreshTokenRequest refreshTokenRequest)
+        {
+            return _authService.CheckRefreshTokenIsValid(refreshTokenRequest);
+        }
+
         [HttpPost("/auth/refresh-token")]
-        public LoginResponse CreateRefreshToken(RefreshTokenRequest refreshTokenRequest)
+        public LoginResponse CreateRefreshToken([FromForm] RefreshTokenRequest refreshTokenRequest)
         {
             return _authService.CreateRefreshToken(refreshTokenRequest);
         }
 
-
         [HttpPost("/auth/login")]
-        public LoginResponse Login(LoginRequest loginRequest)
+        public LoginResponse Login([FromForm] LoginRequest loginRequest)
         {
             return _authService.Login(loginRequest);
         }
 
         [Authorize]
         [HttpPost("/auth/register")]
-        public UserResponse Regist(RegisterRequest registerRequest)
+        public UserResponse Regist([FromForm] RegisterRequest registerRequest)
         {
             return _authService.Register(registerRequest);
         }

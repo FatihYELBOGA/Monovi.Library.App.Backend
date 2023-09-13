@@ -22,6 +22,46 @@ namespace Library_App.Services
             _configuration = configuration;
         }
 
+        public bool CheckTokenIsValid(string token)
+        {
+            if (ConvertStringToToken(token) != null)
+                return true;
+
+            return false;
+        }
+
+        private JwtSecurityToken ConvertStringToToken(string token)
+        {
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JWTConfig:key").Value));
+            try
+            {
+                JwtSecurityTokenHandler handler = new();
+                handler.ValidateToken(token, new TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = signingKey,
+                    ValidateLifetime = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                }, out SecurityToken validatedToken);
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                return jwtToken;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public bool CheckRefreshTokenIsValid(RefreshTokenRequest refreshTokenRequest)
+        {
+            RefreshToken updatedRefreshToken = _authRepository.CheckRefreshToken(refreshTokenRequest);
+            if (updatedRefreshToken != null && updatedRefreshToken.Expiration.CompareTo(DateTime.Now) > 0)
+                return true;
+
+            return false;
+        }
+
         public LoginResponse CreateRefreshToken(RefreshTokenRequest refreshTokenRequest)
         {
             LoginResponse loginResponse = new LoginResponse();
@@ -36,34 +76,37 @@ namespace Library_App.Services
             RefreshToken updatedRefreshToken =  _authRepository.CheckRefreshToken(refreshTokenRequest);
             if (updatedRefreshToken!=null)
             {
-                updatedRefreshToken.Token = CreateRefreshToken();
-                updatedRefreshToken.Expiration = DateTime.Now.AddHours(Convert.ToInt64(_configuration.GetSection("JWTConfig:refresh-token-expiration-hour").Value)); ;
-                _authRepository.UpdateRefreshToken(updatedRefreshToken);
-
-                loginResponse.Success = true;
-
-                string signingKey = _configuration.GetSection("JWTConfig:key").Value;
-                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
-                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-                var claims = new[]
+                if (updatedRefreshToken.Expiration.CompareTo(DateTime.Now) > 0)
                 {
+                    updatedRefreshToken.Token = CreateRefreshToken();
+                    updatedRefreshToken.Expiration = DateTime.Now.AddHours(Convert.ToInt64(_configuration.GetSection("JWTConfig:refresh-token-expiration-hour").Value)); ;
+                    _authRepository.UpdateRefreshToken(updatedRefreshToken);
+
+                    loginResponse.Success = true;
+
+                    string signingKey = _configuration.GetSection("JWTConfig:key").Value;
+                    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
+                    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+                    var claims = new[]
+                    {
                     new Claim(ClaimTypes.NameIdentifier, Convert.ToString(updatedRefreshToken.UserId)),
                     new Claim(JwtRegisteredClaimNames.Email, updatedRefreshToken.User.Email),
                     new Claim(ClaimTypes.Role, updatedRefreshToken.User.Role.ToString())
                 };
-                var jwtSecurityToken = new JwtSecurityToken(
-                    claims: claims,
-                    expires: DateTime.Now.AddHours(Convert.ToInt64(_configuration.GetSection("JWTConfig:token-expiration-hour").Value)),
-                    notBefore: DateTime.Now,
-                    signingCredentials: credentials
-                );
+                    var jwtSecurityToken = new JwtSecurityToken(
+                        claims: claims,
+                        expires: DateTime.Now.AddHours(Convert.ToInt64(_configuration.GetSection("JWTConfig:token-expiration-hour").Value)),
+                        notBefore: DateTime.Now,
+                        signingCredentials: credentials
+                    );
 
-                loginResponse.JWTToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-                loginResponse.RefreshToken = updatedRefreshToken.Token;
-                loginResponse.Id = updatedRefreshToken.UserId;
-                loginResponse.Username = updatedRefreshToken.User.Email;
-                loginResponse.Role = updatedRefreshToken.User.Role;
-                loginResponse.Message = "successful refresh token";
+                    loginResponse.JWTToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                    loginResponse.RefreshToken = updatedRefreshToken.Token;
+                    loginResponse.Id = updatedRefreshToken.UserId;
+                    loginResponse.Username = updatedRefreshToken.User.Email;
+                    loginResponse.Role = updatedRefreshToken.User.Role;
+                    loginResponse.Message = "successful refresh token";
+                }
             } 
 
             return loginResponse;
@@ -156,14 +199,7 @@ namespace Library_App.Services
             };
 
             User returnedUser = _authRepository.Register(addedUser);
-            return new UserResponse()
-            {
-                Id = returnedUser.Id,
-                Email = returnedUser.Email,
-                FirstName = returnedUser.FirstName,
-                LastName = returnedUser.LastName,
-                Role = returnedUser.Role
-            };
+            return new UserResponse(returnedUser);
         }
 
     }

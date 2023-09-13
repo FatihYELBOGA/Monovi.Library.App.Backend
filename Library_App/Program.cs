@@ -74,6 +74,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
+builder.Services.AddTransient<IBookService, BookService>();
+builder.Services.AddTransient<IBookRepository, BookRepository>();
 
 var app = builder.Build();
 

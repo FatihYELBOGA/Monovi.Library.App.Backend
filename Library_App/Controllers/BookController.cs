@@ -1,6 +1,7 @@
 ﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
 using Library_App.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library_App.Controllers
@@ -20,31 +21,34 @@ namespace Library_App.Controllers
         [HttpGet("/books")]
         public List<BookResponse> GetAll()
         {
-            return new List<BookResponse>();
+            return _bookService.GetAll();
         }
 
         [HttpGet("/books/{id}")]
         public BookResponse GetById(int id)
         {
-            return new BookResponse();
+            return _bookService.GetById(id);
         }
 
+        [Authorize]
         [HttpPost("/books")]
         public BookResponse Create([FromForm] BookRequest bookRequest)
         {
-            return new BookResponse();
+            return _bookService.Create(bookRequest);
         }
 
+        [Authorize]
         [HttpPut("/books/{id}")]
         public BookResponse Update(int id, [FromForm] BookRequest bookRequest)
         {
-            return new BookResponse();
+            return _bookService.Update(id, bookRequest);
         }
 
+        [Authorize]
         [HttpDelete("/books/{id}")]
         public bool RemoveById(int id)
         {
-            return true;
+            return _bookService.RemoveById(id);
         }
 
 

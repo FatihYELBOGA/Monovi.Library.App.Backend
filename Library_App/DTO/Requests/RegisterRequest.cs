@@ -1,6 +1,4 @@
-﻿using Library_App.Enumerations;
-
-namespace Library_App.DTO.Requests
+﻿namespace Library_App.DTO.Requests
 {
     public class RegisterRequest
     {
