@@ -6,6 +6,7 @@ C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\ob
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Library_App.pdb
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Azure.Core.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Azure.Identity.dll
+C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.Data.SqlClient.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.EntityFrameworkCore.dll
@@ -17,6 +18,7 @@ C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\ob
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Logging.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Options.dll
@@ -32,6 +34,9 @@ C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\ob
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.OpenApi.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.SqlServer.Server.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
+C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Scrutor.dll
+C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Filters.dll
+C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Filters.Abstractions.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Fatih YELBOĞA\Desktop\GitHub\Monovi.Library.App.Backend\Library_App\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
