@@ -12,7 +12,7 @@ namespace Library_App.Models
         public File? Profil { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime BornDate { get; set; }
+        public DateTime? BornDate { get; set; }
         public Gender Gender { get; set; }
         public string? About { get; set; }
         public RefreshToken? RefreshToken { get; set; }

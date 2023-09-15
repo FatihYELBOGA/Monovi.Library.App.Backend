@@ -42,7 +42,6 @@ namespace Library_App.Controllers
             return _authService.Login(loginRequest);
         }
 
-        [Authorize]
         [HttpPost("/auth/register")]
         public UserResponse Regist([FromForm] RegisterRequest registerRequest)
         {
