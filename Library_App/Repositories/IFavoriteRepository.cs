@@ -6,6 +6,7 @@ namespace Library_App.Repositories
     {
 
         public List<FavoriteBooks> GetFavoritesByUserId(int userId);
+        public bool CheckFavorite(int bookId, int userId);
         public FavoriteBooks Create(FavoriteBooks favorite);
         public bool RemoveById(int id);
 

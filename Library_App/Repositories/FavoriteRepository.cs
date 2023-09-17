@@ -30,6 +30,18 @@ namespace Library_App.Repositories
                 .ToList();
         }
 
+        public bool CheckFavorite(int bookId, int userId)
+        {
+            FavoriteBooks foundFavorite = _database.FavoriteBooks
+                .Where(fb => fb.BookId == bookId && fb.UserId == userId)
+                .FirstOrDefault();
+
+            if (foundFavorite != null)
+                return true;
+
+            return false;
+        }
+
         public FavoriteBooks Create(FavoriteBooks favorite)
         {
             FavoriteBooks addedFavorite = _database.FavoriteBooks.Add(favorite).Entity;

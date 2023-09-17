@@ -25,6 +25,11 @@ namespace Library_App.Services
             return favoriteResponses;
         }
 
+        public bool CheckFavorite(int bookId, int userId)
+        {
+            return _favoriteRepository.CheckFavorite(bookId, userId);
+        }
+
         public FavoriteResponse Create(FavoriteRequest favoriteRequest)
         {
             FavoriteBooks addedFavorite = new FavoriteBooks()

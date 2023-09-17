@@ -18,7 +18,7 @@ namespace Library_App.Controllers
             _commentService = commentService;
         }
 
-        [HttpGet("/comments/{id}")]
+        [HttpGet("/comments/{bookId}")]
         public List<CommentResponse> GetByBookId(int bookId)
         {
             return _commentService.GetByBookId(bookId);
