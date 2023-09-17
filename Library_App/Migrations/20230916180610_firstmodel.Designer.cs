@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library_App.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20230912201130_RefreshToken")]
-    partial class RefreshToken
+    [Migration("20230916180610_firstmodel")]
+    partial class firstmodel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,8 +111,11 @@ namespace Library_App.Migrations
 
             modelBuilder.Entity("Library_App.Models.BookRatings", b =>
                 {
-                    b.Property<int?>("UserId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("BookId")
                         .HasColumnType("int");
@@ -120,24 +123,37 @@ namespace Library_App.Migrations
                     b.Property<int>("Point")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId", "BookId");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("BookRatings");
                 });
 
             modelBuilder.Entity("Library_App.Models.FavoriteBooks", b =>
                 {
-                    b.Property<int?>("UserId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("BookId")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId", "BookId");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("FavoriteBooks");
                 });
@@ -169,16 +185,23 @@ namespace Library_App.Migrations
 
             modelBuilder.Entity("Library_App.Models.RefreshToken", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(450)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Expiration")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserId", "Token");
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -225,7 +248,7 @@ namespace Library_App.Migrations
                     b.Property<string>("About")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("BornDate")
+                    b.Property<DateTime?>("BornDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -359,13 +382,11 @@ namespace Library_App.Migrations
                 {
                     b.HasOne("Library_App.Models.Book", "Book")
                         .WithMany("BookRatings")
-                        .HasForeignKey("BookId")
-                        .IsRequired();
+                        .HasForeignKey("BookId");
 
                     b.HasOne("Library_App.Models.User", "User")
                         .WithMany("BookRatings")
-                        .HasForeignKey("UserId")
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Book");
 
@@ -376,13 +397,11 @@ namespace Library_App.Migrations
                 {
                     b.HasOne("Library_App.Models.Book", "Book")
                         .WithMany("FavoriteBooks")
-                        .HasForeignKey("BookId")
-                        .IsRequired();
+                        .HasForeignKey("BookId");
 
                     b.HasOne("Library_App.Models.User", "User")
                         .WithMany("FavoriteBooks")
-                        .HasForeignKey("UserId")
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Book");
 

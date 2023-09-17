@@ -42,9 +42,6 @@ namespace Library_App.Configurations
 
             // user-book favorites relationships
             modelBuilder.Entity<FavoriteBooks>()
-                .HasKey(fb => new { fb.UserId, fb.BookId });
-
-            modelBuilder.Entity<FavoriteBooks>()
                 .HasOne(fb => fb.User)
                 .WithMany(u => u.FavoriteBooks)
                 .HasForeignKey(fb => fb.UserId)
@@ -57,9 +54,6 @@ namespace Library_App.Configurations
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             // user-book ratings relationships
-            modelBuilder.Entity<BookRatings>()
-                .HasKey(br => new { br.UserId, br.BookId });
-
             modelBuilder.Entity<BookRatings>()
                 .HasOne(br => br.User)
                 .WithMany(b => b.BookRatings)

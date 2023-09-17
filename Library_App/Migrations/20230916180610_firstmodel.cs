@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Library_App.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstModel : Migration
+    public partial class firstmodel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,7 +54,7 @@ namespace Library_App.Migrations
                     ProfilId = table.Column<int>(type: "int", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BornDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BornDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     About = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -79,9 +78,9 @@ namespace Library_App.Migrations
                     WriterId = table.Column<int>(type: "int", nullable: true),
                     PhotoId = table.Column<int>(type: "int", nullable: true),
                     ContentId = table.Column<int>(type: "int", nullable: true),
-                    BookType = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BookType = table.Column<int>(type: "int", nullable: false),
                     PageNumber = table.Column<int>(type: "int", nullable: false),
                     Language = table.Column<int>(type: "int", nullable: false)
                 },
@@ -110,6 +109,26 @@ namespace Library_App.Migrations
                         principalTable: "Writers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Expiration = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -165,13 +184,15 @@ namespace Library_App.Migrations
                 name: "BookRatings",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    BookId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    BookId = table.Column<int>(type: "int", nullable: true),
                     Point = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookRatings", x => new { x.UserId, x.BookId });
+                    table.PrimaryKey("PK_BookRatings", x => x.Id);
                     table.ForeignKey(
                         name: "FK_BookRatings_Books_BookId",
                         column: x => x.BookId,
@@ -188,12 +209,14 @@ namespace Library_App.Migrations
                 name: "FavoriteBooks",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    BookId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    BookId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FavoriteBooks", x => new { x.UserId, x.BookId });
+                    table.PrimaryKey("PK_FavoriteBooks", x => x.Id);
                     table.ForeignKey(
                         name: "FK_FavoriteBooks_Books_BookId",
                         column: x => x.BookId,
@@ -253,6 +276,11 @@ namespace Library_App.Migrations
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BookRatings_UserId",
+                table: "BookRatings",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Books_ContentId",
                 table: "Books",
                 column: "ContentId",
@@ -280,6 +308,17 @@ namespace Library_App.Migrations
                 name: "IX_FavoriteBooks_BookId",
                 table: "FavoriteBooks",
                 column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FavoriteBooks_UserId",
+                table: "FavoriteBooks",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_SharingBooks_BookId",
@@ -320,6 +359,9 @@ namespace Library_App.Migrations
 
             migrationBuilder.DropTable(
                 name: "FavoriteBooks");
+
+            migrationBuilder.DropTable(
+                name: "RefreshTokens");
 
             migrationBuilder.DropTable(
                 name: "SharingBooks");

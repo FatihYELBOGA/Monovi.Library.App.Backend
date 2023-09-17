@@ -108,8 +108,11 @@ namespace Library_App.Migrations
 
             modelBuilder.Entity("Library_App.Models.BookRatings", b =>
                 {
-                    b.Property<int?>("UserId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("BookId")
                         .HasColumnType("int");
@@ -117,24 +120,37 @@ namespace Library_App.Migrations
                     b.Property<int>("Point")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId", "BookId");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("BookRatings");
                 });
 
             modelBuilder.Entity("Library_App.Models.FavoriteBooks", b =>
                 {
-                    b.Property<int?>("UserId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("BookId")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId", "BookId");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("FavoriteBooks");
                 });
@@ -363,13 +379,11 @@ namespace Library_App.Migrations
                 {
                     b.HasOne("Library_App.Models.Book", "Book")
                         .WithMany("BookRatings")
-                        .HasForeignKey("BookId")
-                        .IsRequired();
+                        .HasForeignKey("BookId");
 
                     b.HasOne("Library_App.Models.User", "User")
                         .WithMany("BookRatings")
-                        .HasForeignKey("UserId")
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Book");
 
@@ -380,13 +394,11 @@ namespace Library_App.Migrations
                 {
                     b.HasOne("Library_App.Models.Book", "Book")
                         .WithMany("FavoriteBooks")
-                        .HasForeignKey("BookId")
-                        .IsRequired();
+                        .HasForeignKey("BookId");
 
                     b.HasOne("Library_App.Models.User", "User")
                         .WithMany("FavoriteBooks")
-                        .HasForeignKey("UserId")
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Book");
 
