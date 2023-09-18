@@ -27,7 +27,7 @@ namespace Library_App.Controllers
 
         [Authorize]
         [HttpGet("/favorites")]
-        public bool CheckFavorite([FromQuery] int bookId, [FromQuery] int userId)
+        public FavoriteResponse CheckFavorite([FromQuery] int bookId, [FromQuery] int userId)
         {
             return _favoriteService.CheckFavorite(bookId, userId);
         }

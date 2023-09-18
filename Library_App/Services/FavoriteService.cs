@@ -25,9 +25,15 @@ namespace Library_App.Services
             return favoriteResponses;
         }
 
-        public bool CheckFavorite(int bookId, int userId)
+        public FavoriteResponse CheckFavorite(int bookId, int userId)
         {
-            return _favoriteRepository.CheckFavorite(bookId, userId);
+            FavoriteBooks returnedFavorite = _favoriteRepository.CheckFavorite(bookId, userId);
+            if(returnedFavorite != null)
+            {
+                return new FavoriteResponse(returnedFavorite);
+            }
+
+            return null;
         }
 
         public FavoriteResponse Create(FavoriteRequest favoriteRequest)

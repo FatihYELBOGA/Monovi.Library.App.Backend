@@ -37,36 +37,43 @@ namespace Library_App.Services
         public BookResponse Create(BookRequest bookRequest)
         {
             Models.File photo = null;
-            if (bookRequest.Photo.Length > 0)
-            {
-                using (var stream = new MemoryStream())
-                {
-                    bookRequest.Photo.CopyTo(stream);
-                    var bytes = stream.ToArray();
+            Models.File content = null;
 
-                    photo = new Models.File()
+            if (bookRequest.Photo != null)
+            {
+                if (bookRequest.Photo.Length > 0)
+                {
+                    using (var stream = new MemoryStream())
                     {
-                        Name = bookRequest.Photo.FileName,
-                        Type = bookRequest.Photo.ContentType,
-                        Content = bytes
-                    };
+                        bookRequest.Photo.CopyTo(stream);
+                        var bytes = stream.ToArray();
+
+                        photo = new Models.File()
+                        {
+                            Name = bookRequest.Photo.FileName,
+                            Type = bookRequest.Photo.ContentType,
+                            Content = bytes
+                        };
+                    }
                 }
             }
 
-            Models.File content = null;
-            if (bookRequest.Content.Length > 0)
+            if (bookRequest.Content != null)
             {
-                using (var stream = new MemoryStream())
+                if (bookRequest.Content.Length > 0)
                 {
-                    bookRequest.Content.CopyTo(stream);
-                    var bytes = stream.ToArray();
-
-                    content = new Models.File()
+                    using (var stream = new MemoryStream())
                     {
-                        Name = bookRequest.Content.FileName,
-                        Type = bookRequest.Content.ContentType,
-                        Content = bytes
-                    };
+                        bookRequest.Content.CopyTo(stream);
+                        var bytes = stream.ToArray();
+
+                        content = new Models.File()
+                        {
+                            Name = bookRequest.Content.FileName,
+                            Type = bookRequest.Content.ContentType,
+                            Content = bytes
+                        };
+                    }
                 }
             }
 
@@ -92,7 +99,6 @@ namespace Library_App.Services
             Models.File photo = null;
             Models.File content = null;
 
-            Book returnedBook = null;
             Book updatedBook = _bookRepository.GetById(id);
             updatedBook.Name = bookRequest.Name;
             updatedBook.Description = bookRequest.Description;
@@ -101,47 +107,47 @@ namespace Library_App.Services
             updatedBook.Language = bookRequest.Language;
             updatedBook.WriterId = bookRequest.WriterId;
 
-            if (bookRequest.Photo == null && bookRequest.Content == null)
+            if (bookRequest.Photo != null)
             {
-                returnedBook = _bookRepository.Update(updatedBook);
-                return new BookResponse(returnedBook);
-            }
-
-            if (bookRequest.Photo.Length > 0)
-            {
-                using (var stream = new MemoryStream())
+                if (bookRequest.Photo.Length > 0)
                 {
-                    bookRequest.Photo.CopyTo(stream);
-                    var bytes = stream.ToArray();
-
-                    photo = new Models.File()
+                    using (var stream = new MemoryStream())
                     {
-                        Name = bookRequest.Photo.FileName,
-                        Type = bookRequest.Photo.ContentType,
-                        Content = bytes
-                    };
+                        bookRequest.Photo.CopyTo(stream);
+                        var bytes = stream.ToArray();
+
+                        photo = new Models.File()
+                        {
+                            Name = bookRequest.Photo.FileName,
+                            Type = bookRequest.Photo.ContentType,
+                            Content = bytes
+                        };
+                    }
+                    updatedBook.Photo = photo;
                 }
             }
 
-            if (bookRequest.Content.Length > 0)
+            if (bookRequest.Content != null)
             {
-                using (var stream = new MemoryStream())
+                if (bookRequest.Content.Length > 0)
                 {
-                    bookRequest.Content.CopyTo(stream);
-                    var bytes = stream.ToArray();
-
-                    content = new Models.File()
+                    using (var stream = new MemoryStream())
                     {
-                        Name = bookRequest.Content.FileName,
-                        Type = bookRequest.Content.ContentType,
-                        Content = bytes
-                    };
+                        bookRequest.Content.CopyTo(stream);
+                        var bytes = stream.ToArray();
+
+                        content = new Models.File()
+                        {
+                            Name = bookRequest.Content.FileName,
+                            Type = bookRequest.Content.ContentType,
+                            Content = bytes
+                        };
+                    }
+                    updatedBook.Content = content;
                 }
             }
 
-            updatedBook.Photo = photo;
-            updatedBook.Content = content;
-            returnedBook = _bookRepository.Update(updatedBook);
+            Book returnedBook = _bookRepository.Update(updatedBook);
             return new BookResponse(returnedBook);
         }
 

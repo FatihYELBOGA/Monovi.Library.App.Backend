@@ -47,13 +47,9 @@ builder.Services.AddControllers().AddJsonOptions(
     {
         var enumConverter = new JsonStringEnumConverter();
         options.JsonSerializerOptions.Converters.Add(enumConverter);
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     }
 );
-
-builder.Services.AddControllers().AddJsonOptions(
-    options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
-);
-
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(
@@ -84,6 +80,8 @@ builder.Services.AddTransient<IRatingService, RatingService>();
 builder.Services.AddTransient<IRatingRepository, RatingRepository>();
 builder.Services.AddTransient<IFavoriteService, FavoriteService>();
 builder.Services.AddTransient<IFavoriteRepository, FavoriteRepository>();
+builder.Services.AddTransient<IWriterService, WriterService>();
+builder.Services.AddTransient<IWriterRepository, WriterRepository>();
 
 var app = builder.Build();
 

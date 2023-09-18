@@ -7,6 +7,7 @@
         public string Type { get; set; }
         public byte[] Content { get; set; }
         public User? User { get; set; }
+        public Writer? Writer { get; set; }
         public Book? Book { get; set; }
         public Book? BookContent {  get; set; }
 

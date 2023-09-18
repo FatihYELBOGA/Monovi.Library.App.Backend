@@ -108,11 +108,17 @@ namespace Library_App.Configurations
                 .HasForeignKey(b => b.WriterId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // user-book-file relationships
+            // user-writer-book relationships
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Profil)
                 .WithOne(f => f.User)
                 .HasForeignKey<User>(u => u.ProfilId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Writer>()
+                .HasOne(w => w.Profil)
+                .WithOne(f => f.Writer)
+                .HasForeignKey<Writer>(w => w.ProfilId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             modelBuilder.Entity<Book>()
@@ -142,162 +148,10 @@ namespace Library_App.Configurations
             {
                 if (database.Users.Count() == 0) 
                 {
-                    database.Users.AddRange(users);
-                    database.Writers.AddRange(writers);
-                    database.Books.AddRange(books);
-                    database.BookComments.AddRange(bookComments);
-                    database.BookRatings.AddRange(bookRatings);
-                    database.FavoriteBooks.AddRange(favoriteBooks);
-                    database.SharingBooks.AddRange(sharingBooks);
-                    database.UserFriends.AddRange(userFriends);
-                    database.SaveChanges();
+
                 }
             }
         }
-
-        private static User[] users =
-        {
-            new User()
-            {
-                Email = "fatihyelboga@gmail.com",
-                Password = "fatih123",
-                Role = Enumerations.Role.USER,
-                FirstName = "Fatih",
-                LastName = "YELBOĞA",
-                BornDate = new DateTime(2001, 01, 12),
-                Gender = Enumerations.Gender.MALE,
-                About = "He is professional football player."
-            },
-            new User()
-            {
-                Email = "berkaybayrak@gmail.com",
-                Password = "berkay123",
-                Role = Enumerations.Role.USER,
-                FirstName = "Berkay",
-                LastName = "YAPRAK",
-                BornDate = new DateTime(2000, 06, 18),
-                Gender = Enumerations.Gender.MALE,
-                About = "He is pornstar."
-            }
-        };
-
-        private static Writer[] writers =
-        {
-            new Writer()
-            {
-                FirstName = "Osman",
-                LastName = "ALTUNAY",
-                Gender = Enumerations.Gender.FEMALE,
-                Nationality = Enumerations.Nationality.ENGLAND,
-                Biography = "Hi guys, l am Osman ALTUNAY."
-            },
-            new Writer()
-            {
-                FirstName = "Enes",
-                LastName = "DEMİREL",
-                Gender = Enumerations.Gender.MALE,
-                Nationality = Enumerations.Nationality.TURKEY,
-                Biography = "Merhaba guys, ben Enes DEMİREL."
-            }
-        };
-
-        private static Book[] books =
-        {
-            new Book()
-            {
-                User = users[0],
-                Writer = writers[1],
-                BookType = Enumerations.BookType.ESSAY,
-                Name = "Machine Learning with Python",
-                Description = "If you want to learn machine learning with python, you can read this tutorials.",
-                PageNumber = 512,
-                Language = Enumerations.Language.ENGLISH
-            },
-            new Book()
-            {
-                User = users[1],
-                Writer = writers[0],
-                BookType = Enumerations.BookType.NOVEL,
-                Name = "Dede Korkut Hikayeleri",
-                Description = "Dede Korkut Kitabı, Oğuz Türklerinin bilinen en eski epik destansı hikâyeleridir.",
-                PageNumber = 1024,
-                Language = Enumerations.Language.TURKISH
-            }
-        };
-
-        private static BookComments[] bookComments =
-        {
-            new BookComments()
-            {
-                User = users[0],
-                Book = books[1],
-                Comment = "Güzel bir hikayeydi!",
-                CommentDate = new DateTime(2023, 09, 7, 10, 00, 00)
-            },
-            new BookComments()
-            {
-                User = users[1],
-                Book = books[0],
-                Comment = "Güzel bir tutorial!",
-                CommentDate = new DateTime(2023, 08, 5, 20, 00, 00)
-            }
-        };
-
-        private static BookRatings[] bookRatings =
-        {
-            new BookRatings()
-            {
-                User = users[0],
-                Book = books[1],
-                Point = 8
-            },
-            new BookRatings()
-            {
-                User = users[1],
-                Book = books[0],
-                Point = 6
-            }
-        };
-
-        private static FavoriteBooks[] favoriteBooks =
-        {
-            new FavoriteBooks()
-            {
-                User = users[0],
-                Book = books[1]
-            },
-            new FavoriteBooks()
-            {
-                User = users[1],
-                Book = books[0]
-            }
-        };
-
-        private static SharingBooks[] sharingBooks =
-        {
-            new SharingBooks()
-            {
-                SenderUser = users[0],
-                ReceiverUser = users[1],
-                Book = books[0]
-            },
-            new SharingBooks()
-            {
-                SenderUser = users[1],
-                ReceiverUser = users[0],
-                Book = books[1]
-            }
-        };
-
-        private static UserFriends[] userFriends =
-        {
-            new UserFriends()
-            {
-                FriendOne = users[0],
-                FriendTwo = users[0],
-                RequestStatus = Enumerations.RequestStatus.APPROVED
-            }
-        };
 
     }
 

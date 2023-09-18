@@ -4,12 +4,14 @@ namespace Library_App.DTO.Responses
 {
     public class FavoriteResponse
     {
-
+        
+        public int Id { get; set; }
         public BookResponse Book { get; set; }
         public UserResponse User {  get; set; }
 
         public FavoriteResponse(FavoriteBooks favorite)
         {
+            Id = favorite.Id;
 
             if(favorite.Book != null)
             {

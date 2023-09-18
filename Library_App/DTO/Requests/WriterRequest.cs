@@ -1,19 +1,15 @@
 ﻿using Library_App.Enumerations;
 
-namespace Library_App.Models
+namespace Library_App.DTO.Requests
 {
-    public class Writer
+    public class WriterRequest
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int? ProfilId { get; set; }
-        public File? Profil { get; set; }
+        public IFormFile? Profil { get; set; }
         public Gender Gender { get; set; }
         public Nationality Nationality { get; set; }
         public string Biography { get; set; }
-        public List<Book> Books { get; set; }
 
     }
-
 }

@@ -326,7 +326,14 @@ namespace Library_App.Migrations
                     b.Property<int>("Nationality")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProfilId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfilId")
+                        .IsUnique()
+                        .HasFilter("[ProfilId] IS NOT NULL");
 
                     b.ToTable("Writers");
                 });
@@ -463,6 +470,15 @@ namespace Library_App.Migrations
                     b.Navigation("FriendTwo");
                 });
 
+            modelBuilder.Entity("Library_App.Models.Writer", b =>
+                {
+                    b.HasOne("Library_App.Models.File", "Profil")
+                        .WithOne("Writer")
+                        .HasForeignKey("Library_App.Models.Writer", "ProfilId");
+
+                    b.Navigation("Profil");
+                });
+
             modelBuilder.Entity("Library_App.Models.Book", b =>
                 {
                     b.Navigation("BookComments");
@@ -481,6 +497,8 @@ namespace Library_App.Migrations
                     b.Navigation("BookContent");
 
                     b.Navigation("User");
+
+                    b.Navigation("Writer");
                 });
 
             modelBuilder.Entity("Library_App.Models.User", b =>

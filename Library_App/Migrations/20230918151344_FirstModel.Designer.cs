@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library_App.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20230916180610_firstmodel")]
-    partial class firstmodel
+    [Migration("20230918151344_FirstModel")]
+    partial class FirstModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -329,7 +329,14 @@ namespace Library_App.Migrations
                     b.Property<int>("Nationality")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProfilId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfilId")
+                        .IsUnique()
+                        .HasFilter("[ProfilId] IS NOT NULL");
 
                     b.ToTable("Writers");
                 });
@@ -466,6 +473,15 @@ namespace Library_App.Migrations
                     b.Navigation("FriendTwo");
                 });
 
+            modelBuilder.Entity("Library_App.Models.Writer", b =>
+                {
+                    b.HasOne("Library_App.Models.File", "Profil")
+                        .WithOne("Writer")
+                        .HasForeignKey("Library_App.Models.Writer", "ProfilId");
+
+                    b.Navigation("Profil");
+                });
+
             modelBuilder.Entity("Library_App.Models.Book", b =>
                 {
                     b.Navigation("BookComments");
@@ -484,6 +500,8 @@ namespace Library_App.Migrations
                     b.Navigation("BookContent");
 
                     b.Navigation("User");
+
+                    b.Navigation("Writer");
                 });
 
             modelBuilder.Entity("Library_App.Models.User", b =>

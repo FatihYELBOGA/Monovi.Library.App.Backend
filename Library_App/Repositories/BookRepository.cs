@@ -19,6 +19,7 @@ namespace Library_App.Repositories
             return _database.Books
                 .Include(b => b.Writer)
                 .Include(b => b.Photo)
+                .Include(b => b.BookRatings)
                 .ToList();
         }
 
@@ -30,6 +31,7 @@ namespace Library_App.Repositories
                 .Include(b => b.Writer)
                 .Include(b => b.Photo)
                 .Include(b => b.Content)
+                .Include(b => b.BookRatings)
                 .FirstOrDefault();
         }
 

@@ -11,10 +11,13 @@ namespace Library_App.DTO.Responses
         public BookType BookType { get; set; }
         public int PageNumber { get; set; }
         public Language Language { get; set; }
+        public float Point { get; set; } 
         public FileResponse? Photo { get; set; }
         public FileResponse? Content { get; set; }
         public UserResponse? User { get; set; }
         public WriterResponse? Writer { get; set; }  
+
+        public BookResponse() { }   
 
         public BookResponse(Book book) 
         { 
@@ -24,6 +27,22 @@ namespace Library_App.DTO.Responses
             BookType = book.BookType;
             PageNumber = book.PageNumber;
             Language = book.Language;
+
+            Point = (float) 0.0;
+            int totalRating = 0;
+            int totalCounter = 0;
+            if(book.BookRatings != null)
+            {
+                if(book.BookRatings.Count() != 0)
+                {
+                    foreach (var rating in book.BookRatings)
+                    {
+                        totalRating += rating.Point;
+                        totalCounter++;
+                    }
+                    Point = (float) totalRating / totalCounter;
+                }
+            }
 
             if(book.Photo != null)
                 Photo = new FileResponse(book.Photo);
