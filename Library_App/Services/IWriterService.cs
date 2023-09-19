@@ -6,6 +6,7 @@ namespace Library_App.Services
     public interface IWriterService
     {
         public List<WriterResponse> GetAll();
+        public List<WriterResponse> GetAllNames();
         public WriterResponse GetById(int id);
         public WriterResponse Create(WriterRequest writerRequest);
         public WriterResponse Update(int id, WriterRequest writerRequest);

@@ -14,6 +14,13 @@ namespace Library_App.Repositories
             _database = database;
         }
 
+        public List<User> GetAll()
+        {
+            return _database.Users
+                .Include(u => u.Profil)
+                .ToList();
+        }
+
         public User GetById(int id)
         {
             return _database.Users

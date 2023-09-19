@@ -7,6 +7,7 @@ namespace Library_App.Services
     {
         public List<BookResponse> GetAll();
         public BookResponse GetById(int id);
+        public List<BookResponse> GetAllByUserId(int userId);
         public BookResponse Create(BookRequest bookRequest);
         public BookResponse Update(int id, BookRequest bookRequest);
         public bool RemoveById(int id);

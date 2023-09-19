@@ -8,7 +8,7 @@ namespace Library_App.Controllers
     public class EnumerationController : ControllerBase
     {
 
-        [HttpGet("/enumerations/books")]
+        [HttpGet("/enumerations/book-types")]
         public BookType[] GetAllBookTypes()
         {
             return (BookType[]) Enum.GetValues(typeof(BookType));

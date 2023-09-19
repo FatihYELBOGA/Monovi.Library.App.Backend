@@ -17,6 +17,12 @@ namespace Library_App.Controllers
             _userService = userService;
         }
 
+        [HttpGet("/users")]
+        public List<UserResponse> GetAll()
+        {
+            return _userService.GetAll();
+        }
+
         [HttpGet("/users/{id}")]
         public UserResponse GetById(int id) 
         {

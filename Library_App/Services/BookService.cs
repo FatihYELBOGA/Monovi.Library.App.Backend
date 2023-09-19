@@ -34,6 +34,16 @@ namespace Library_App.Services
             return null;
         }
 
+        public List<BookResponse> GetAllByUserId(int userId)
+        {
+            List<BookResponse> bookResponses = new List<BookResponse>();
+            foreach (var book in _bookRepository.GetAllByUserId(userId))
+            {
+                bookResponses.Add(new BookResponse(book));
+            }
+            return bookResponses;
+        }
+
         public BookResponse Create(BookRequest bookRequest)
         {
             Models.File photo = null;

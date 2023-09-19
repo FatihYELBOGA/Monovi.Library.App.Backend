@@ -23,6 +23,12 @@ namespace Library_App.Controllers
             return _writerService.GetAll();
         }
 
+        [HttpGet("/writers/names")]
+        public List<WriterResponse> GetAllNames()
+        {
+            return _writerService.GetAllNames();
+        }
+
         [HttpGet("/writers/{id}")]
         public WriterResponse GetById(int id)
         {

@@ -25,6 +25,16 @@ namespace Library_App.Services
             return writerResponses;
         }
 
+        public List<WriterResponse> GetAllNames()
+        {
+            List<WriterResponse> writerResponses = new List<WriterResponse>();
+            foreach (var writer in _writerRepository.GetAllNames())
+            {
+                writerResponses.Add(new WriterResponse(writer));
+            }
+            return writerResponses;
+        }
+
         public WriterResponse GetById(int id)
         {
             Writer foundWriter = _writerRepository.GetById(id);

@@ -21,6 +21,11 @@ namespace Library_App.Repositories
                 .ToList();
         }
 
+        public List<Writer> GetAllNames()
+        {
+            return _database.Writers.ToList();
+        }
+
         public Writer GetById(int id)
         {
             return _database.Writers

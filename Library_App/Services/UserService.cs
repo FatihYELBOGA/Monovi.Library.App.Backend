@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Library_App.DTO.Requests;
+﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
 using Library_App.Models;
 using Library_App.Repositories;
@@ -14,6 +13,16 @@ namespace Library_App.Services
         public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+        }
+
+        public List<UserResponse> GetAll()
+        {
+            List<UserResponse> userResponses = new List<UserResponse>();
+            foreach (var user in _userRepository.GetAll())
+            {
+                userResponses.Add(new UserResponse(user));
+            }
+            return userResponses;
         }
 
         public UserResponse GetById(int id)

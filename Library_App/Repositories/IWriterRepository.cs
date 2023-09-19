@@ -4,11 +4,12 @@ namespace Library_App.Repositories
 {
     public interface IWriterRepository
     {
-        public List<Writer> GetAll();
+        public List<Writer> GetAll(); 
+        public List<Writer> GetAllNames();
         public Writer GetById(int id);
         public Writer Create(Writer writer);
         public Writer Update(Writer writer);
         public bool RemoveById(int id);
-
+       
     }
 }

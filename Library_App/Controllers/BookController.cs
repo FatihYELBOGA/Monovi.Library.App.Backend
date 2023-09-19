@@ -30,6 +30,12 @@ namespace Library_App.Controllers
             return _bookService.GetById(id);
         }
 
+        [HttpGet("/books/users/{userId}")]
+        public List<BookResponse> GetAllByUserId(int userId)
+        {
+            return _bookService.GetAllByUserId(userId);
+        }
+
         [HttpPost("/books")]
         public BookResponse Create([FromForm] BookRequest bookRequest)
         {

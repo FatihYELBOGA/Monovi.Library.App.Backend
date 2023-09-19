@@ -35,6 +35,17 @@ namespace Library_App.Repositories
                 .FirstOrDefault();
         }
 
+        public List<Book> GetAllByUserId(int userId)
+        {
+            return _database.Books
+                .Where(b => b.UserId == userId)
+                .Include(b => b.User)
+                .Include(b => b.Writer)
+                .Include(b => b.Photo)
+                .Include(b => b.BookRatings)
+                .ToList();
+        }
+
         public Book Create(Book book)
         {
             Book returnedBook = _database.Books.Add(book).Entity;
