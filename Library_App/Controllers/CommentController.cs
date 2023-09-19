@@ -24,14 +24,12 @@ namespace Library_App.Controllers
             return _commentService.GetByBookId(bookId);
         }
 
-        [Authorize]
         [HttpPost("/comments")]
         public CommentResponse Create([FromForm] CommentRequest commentRequest)
         {
             return _commentService.Create(commentRequest);
         }
 
-        [Authorize]
         [HttpDelete("/comments/{id}")]
         public bool RemoveById(int id)
         {

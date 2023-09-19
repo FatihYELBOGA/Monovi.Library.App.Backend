@@ -37,19 +37,23 @@ namespace Library_App.Services
         public WriterResponse Create(WriterRequest writerRequest)
         {
             Models.File profil = null;
-            if (writerRequest.Profil.Length > 0)
+            
+            if(writerRequest.Profil != null)
             {
-                using (var stream = new MemoryStream())
+                if (writerRequest.Profil.Length > 0)
                 {
-                    writerRequest.Profil.CopyTo(stream);
-                    var bytes = stream.ToArray();
-
-                    profil = new Models.File()
+                    using (var stream = new MemoryStream())
                     {
-                        Name = writerRequest.Profil.FileName,
-                        Type = writerRequest.Profil.ContentType,
-                        Content = bytes
-                    };
+                        writerRequest.Profil.CopyTo(stream);
+                        var bytes = stream.ToArray();
+
+                        profil = new Models.File()
+                        {
+                            Name = writerRequest.Profil.FileName,
+                            Type = writerRequest.Profil.ContentType,
+                            Content = bytes
+                        };
+                    }
                 }
             }
 

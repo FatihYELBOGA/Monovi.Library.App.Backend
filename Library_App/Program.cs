@@ -82,6 +82,10 @@ builder.Services.AddTransient<IFavoriteService, FavoriteService>();
 builder.Services.AddTransient<IFavoriteRepository, FavoriteRepository>();
 builder.Services.AddTransient<IWriterService, WriterService>();
 builder.Services.AddTransient<IWriterRepository, WriterRepository>();
+builder.Services.AddTransient<IFriendshipService, FriendshipService>();
+builder.Services.AddTransient<IFriendshipRepository, FriendshipRepository>();
+builder.Services.AddTransient<IBookSharingService, BookSharingService>();
+builder.Services.AddTransient<IBookSharingRepository, BookSharingRepository>();
 
 var app = builder.Build();
 

@@ -68,9 +68,6 @@ namespace Library_App.Configurations
 
             // user-user friends relationships
             modelBuilder.Entity<UserFriends>()
-               .HasKey(uf => new { uf.FriendOneId, uf.FriendTwoId });
-
-            modelBuilder.Entity<UserFriends>()
                 .HasOne(uf => uf.FriendOne)
                 .WithMany(u => u.UserFriendsOne)
                 .HasForeignKey(uf => uf.FriendOneId)

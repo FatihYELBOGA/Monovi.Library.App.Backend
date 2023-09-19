@@ -18,28 +18,24 @@ namespace Library_App.Controllers
             _favoriteService = favoriteService;
         }
 
-        [Authorize]
         [HttpGet("/favorites/{userId}")]
         public List<FavoriteResponse> GetFavoritesByUserId(int userId)
         {
             return _favoriteService.GetFavoritesByUserId(userId);
         }
 
-        [Authorize]
         [HttpGet("/favorites")]
         public FavoriteResponse CheckFavorite([FromQuery] int bookId, [FromQuery] int userId)
         {
             return _favoriteService.CheckFavorite(bookId, userId);
         }
 
-        [Authorize]
         [HttpPost("/favorites")]
         public FavoriteResponse Create([FromForm] FavoriteRequest favoriteRequest)
         {
             return _favoriteService.Create(favoriteRequest);
         }
 
-        [Authorize]
         [HttpDelete("/favorites/{id}")]
         public bool RemoveById(int id)
         {

@@ -54,7 +54,20 @@ namespace Library_App.DTO.Responses
                 User = new UserResponse(book.User);
 
             if (book.Writer != null)
-                Writer = new WriterResponse(book.Writer);
+            {
+                WriterResponse writerResponse = new WriterResponse();
+                writerResponse.FirstName = book.Writer.FirstName;
+                writerResponse.LastName = book.Writer.LastName;
+                writerResponse.Gender = book.Writer.Gender;
+                writerResponse.Nationality = book.Writer.Nationality;
+                writerResponse.Biography = book.Writer.Biography;
+                writerResponse.Books = new List<BookResponse>();
+
+                if (book.Writer.Profil != null)
+                    writerResponse.Profil = new FileResponse(book.Writer.Profil);
+
+                Writer = writerResponse;
+            }
 
         }
 

@@ -1,6 +1,5 @@
 ﻿ using Library_App.Enumerations;
 using Library_App.Models;
-using System.Drawing;
 
 namespace Library_App.DTO.Responses
 {
@@ -14,6 +13,8 @@ namespace Library_App.DTO.Responses
         public Nationality Nationality { get; set; }
         public string Biography { get; set; }
         public List<BookResponse> Books { get; set; }
+
+        public WriterResponse() { }
 
         public WriterResponse(Writer writer) 
         {
@@ -30,7 +31,6 @@ namespace Library_App.DTO.Responses
 
             if(writer.Books != null)
             {
-                
                 foreach (var book in writer.Books)
                 {
                     BookResponse bookResponse = new BookResponse()

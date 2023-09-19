@@ -18,21 +18,18 @@ namespace Library_App.Controllers
             _ratingService = ratingService;
         }
 
-        [Authorize]
         [HttpGet("/ratings")]
         public RatingResponse GetByBookAndUserId([FromQuery] int bookId, [FromQuery] int userId)
         {
             return _ratingService.GetByBookAndUserId(bookId, userId);
         }
 
-        [Authorize]
         [HttpPost("/ratings")]
         public RatingResponse Create([FromForm] RatingRequest ratingRequest)
         {
             return _ratingService.Create(ratingRequest);
         }
 
-        [Authorize]
         [HttpPut("/ratings")]
         public RatingResponse Update([FromForm] RatingRequest ratingRequest)
         {

@@ -30,21 +30,18 @@ namespace Library_App.Controllers
             return _bookService.GetById(id);
         }
 
-        [Authorize]
         [HttpPost("/books")]
         public BookResponse Create([FromForm] BookRequest bookRequest)
         {
             return _bookService.Create(bookRequest);
         }
 
-        [Authorize]
         [HttpPut("/books/{id}")]
         public BookResponse Update(int id, [FromForm] BookRequest bookRequest)
         {
             return _bookService.Update(id, bookRequest);
         }
 
-        [Authorize]
         [HttpDelete("/books/{id}")]
         public bool RemoveById(int id)
         {
