@@ -1,5 +1,5 @@
-﻿using Library_App.DTO.Requests;
-using Library_App.DTO.Responses;
+﻿using Library_App.DTO.Responses;
+using Library_App.Enumerations;
 
 namespace Library_App.Services
 {
@@ -7,9 +7,9 @@ namespace Library_App.Services
     {
         public List<UserResponse> GetAllFriendsByUserId(int userId);
         public List<UserResponse> GetAllFriendRequestsByUserId(int userId);
-        public bool CheckFriendship(int user1, int user2);
+        public RequestStatus CheckFriendship(int user1, int user2);
         public FriendshipResponse Create(int user1, int user2);
-        public FriendshipResponse Update(int id, FriendshipRequest friendshipRequest);
+        public bool Update(int id, RequestStatus requestStatus);
 
     }
 }

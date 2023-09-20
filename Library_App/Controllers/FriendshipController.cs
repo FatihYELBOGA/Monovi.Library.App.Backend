@@ -2,6 +2,7 @@
 using Library_App.DTO.Responses;
 using Library_App.Services;
 using Microsoft.AspNetCore.Mvc;
+using Library_App.Enumerations;
 
 namespace Library_App.Controllers
 {
@@ -30,7 +31,7 @@ namespace Library_App.Controllers
         }
 
         [HttpGet("/friends")]
-        public bool CheckFriendship([FromQuery] int user1, [FromQuery] int user2)
+        public RequestStatus CheckFriendship([FromQuery] int user1, [FromQuery] int user2)
         {
             return _friendshipService.CheckFriendship(user1, user2);
         }
@@ -42,9 +43,9 @@ namespace Library_App.Controllers
         }
 
         [HttpPut("/friends/{id}")]
-        public FriendshipResponse Update(int id, [FromForm] FriendshipRequest friendshipRequest)
+        public bool Update(int id, [FromForm] RequestStatus requestStatus)
         {
-            return _friendshipService.Update(id, friendshipRequest);
+            return _friendshipService.Update(id, requestStatus);
         }
 
     }

@@ -49,6 +49,13 @@ namespace Library_App.Repositories
                 .ToList();
         }
 
+        public UserFriends GetById(int id)
+        {
+            return _database.UserFriends
+                .Where(uf => uf.Id == id)
+                .FirstOrDefault();
+        }
+
         public UserFriends CheckFriendship(int user1, int user2)
         {
             UserFriends foundFrienship = _database.UserFriends
@@ -80,6 +87,19 @@ namespace Library_App.Repositories
             UserFriends returnedFriendship = _database.UserFriends.Update(userFriend).Entity;
             _database.SaveChanges();
             return returnedFriendship;
+        }
+
+        public bool RemoveById(int id)
+        {
+            UserFriends deletedFriendship = _database.UserFriends.Where(b => b.Id == id).FirstOrDefault();
+            if (deletedFriendship != null)
+            {
+                _database.UserFriends.Remove(deletedFriendship);
+                _database.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
 
     }

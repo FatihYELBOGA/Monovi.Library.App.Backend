@@ -3,7 +3,6 @@ using Library_App.DTO.Responses;
 using Library_App.Models;
 using Library_App.Repositories;
 using Library_App.Enumerations;
-using System.Runtime.Intrinsics.X86;
 
 namespace Library_App.Services
 {
@@ -41,13 +40,13 @@ namespace Library_App.Services
             return userResponses;
         }
 
-        public bool CheckFriendship(int user1, int user2)
+        public RequestStatus CheckFriendship(int user1, int user2)
         {
             UserFriends foundFriendship = _friendshipRepository.CheckFriendship(user1, user2);
             if (foundFriendship != null)
-                return true;
+                return foundFriendship.RequestStatus;
 
-            return false;
+            return RequestStatus.NONE;
         }
 
         public FriendshipResponse Create(int user1, int user2)
@@ -63,18 +62,19 @@ namespace Library_App.Services
             return new FriendshipResponse(returnedFriendship);
         }
 
-        public FriendshipResponse Update(int id, FriendshipRequest friendshipRequest)
+        public bool Update(int id, RequestStatus requestStatus)
         {
-            UserFriends updatedFriendship = new UserFriends()
-            {
-                Id = id,
-                FriendOneId = friendshipRequest.user1,
-                FriendTwoId = friendshipRequest.user2,
-                RequestStatus = friendshipRequest.status
-            };
-            UserFriends returnedFriendship = _friendshipRepository.Update(updatedFriendship);
+            if (requestStatus == RequestStatus.DENIED)
+                return _friendshipRepository.RemoveById(id);
 
-            return new FriendshipResponse(returnedFriendship);
+            UserFriends updatedFriendship = _friendshipRepository.GetById(id);
+            updatedFriendship.RequestStatus = requestStatus;
+
+            UserFriends returnedFriendship = _friendshipRepository.Update(updatedFriendship);
+            if (returnedFriendship != null)
+                return true;
+
+            return false;
         }
 
     }
