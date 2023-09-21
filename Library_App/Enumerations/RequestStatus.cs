@@ -4,8 +4,7 @@
     {
         WAITING,
         APPROVED,
-        DENIED,
-        NONE
+        DENIED
     }
 
 }

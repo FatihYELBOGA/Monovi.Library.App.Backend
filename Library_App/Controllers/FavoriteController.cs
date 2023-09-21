@@ -1,7 +1,7 @@
 ﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
+using Library_App.Pagination;
 using Library_App.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library_App.Controllers
@@ -19,9 +19,9 @@ namespace Library_App.Controllers
         }
 
         [HttpGet("/favorites/{userId}")]
-        public List<FavoriteResponse> GetFavoritesByUserId(int userId)
+        public PaginationResponse<FavoriteResponse> GetFavoritesByUserId(int userId, [FromQuery] int pageNo, [FromQuery] int pageSize)
         {
-            return _favoriteService.GetFavoritesByUserId(userId);
+            return _favoriteService.GetFavoritesByUserId(userId, pageNo, pageSize);
         }
 
         [HttpGet("/favorites")]

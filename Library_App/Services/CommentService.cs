@@ -1,6 +1,7 @@
 ﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
 using Library_App.Models;
+using Library_App.Pagination;
 using Library_App.Repositories;
 
 namespace Library_App.Services
@@ -15,15 +16,14 @@ namespace Library_App.Services
             _commentRepository = commentRepository;
         }
 
-        public List<CommentResponse> GetByBookId(int bookId)
+        public PaginationResponse<CommentResponse> GetByBookId(int bookId, int pageNo, int pageSize)
         {
             List<CommentResponse> commentResponses = new List<CommentResponse>();
             foreach (var comment in _commentRepository.GetByBookId(bookId))
             {
                 commentResponses.Add(new CommentResponse(comment));
-            }
-
-            return commentResponses;
+            };
+            return new PaginationResponse<CommentResponse>(commentResponses, pageNo, pageSize);
         }
 
         public CommentResponse Create(CommentRequest commentRequest)

@@ -1,6 +1,7 @@
 ﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
 using Library_App.Models;
+using Library_App.Pagination;
 using Library_App.Repositories;
 
 namespace Library_App.Services
@@ -15,14 +16,14 @@ namespace Library_App.Services
             _bookRepository = bookRepository;
         }
 
-        public List<BookResponse> GetAll()
+        public PaginationResponse<BookResponse> GetAll(int pageNo, int pageSize)
         {
             List<BookResponse> bookResponses = new List<BookResponse>();
             foreach (var book in _bookRepository.GetAll())
             {
                 bookResponses.Add(new BookResponse(book));
             }
-            return bookResponses;
+            return new PaginationResponse<BookResponse>(bookResponses, pageNo, pageSize);
         }
 
         public BookResponse GetById(int id)
@@ -34,14 +35,14 @@ namespace Library_App.Services
             return null;
         }
 
-        public List<BookResponse> GetAllByUserId(int userId)
+        public PaginationResponse<BookResponse> GetAllByUserId(int userId, int pageNo, int pageSize)
         {
             List<BookResponse> bookResponses = new List<BookResponse>();
             foreach (var book in _bookRepository.GetAllByUserId(userId))
             {
                 bookResponses.Add(new BookResponse(book));
             }
-            return bookResponses;
+            return new PaginationResponse<BookResponse>(bookResponses, pageNo, pageSize);
         }
 
         public BookResponse Create(BookRequest bookRequest)

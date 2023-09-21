@@ -1,6 +1,7 @@
 ﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
 using Library_App.Models;
+using Library_App.Pagination;
 using Library_App.Repositories;
 
 namespace Library_App.Services
@@ -15,14 +16,14 @@ namespace Library_App.Services
             _userRepository = userRepository;
         }
 
-        public List<UserResponse> GetAll()
+        public PaginationResponse<UserResponse> GetAll(int pageNo, int pageSize)
         {
             List<UserResponse> userResponses = new List<UserResponse>();
             foreach (var user in _userRepository.GetAll())
             {
                 userResponses.Add(new UserResponse(user));
             }
-            return userResponses;
+            return new PaginationResponse<UserResponse>(userResponses, pageNo, pageSize);
         }
 
         public UserResponse GetById(int id)

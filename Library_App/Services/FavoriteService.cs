@@ -1,6 +1,7 @@
 ﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
 using Library_App.Models;
+using Library_App.Pagination;
 using Library_App.Repositories;
 
 namespace Library_App.Services
@@ -15,14 +16,14 @@ namespace Library_App.Services
             _favoriteRepository = favoriteRepository;
         }
 
-        public List<FavoriteResponse> GetFavoritesByUserId(int userId)
+        public PaginationResponse<FavoriteResponse> GetFavoritesByUserId(int userId, int pageNo, int pageSize)
         {
             List<FavoriteResponse> favoriteResponses = new List<FavoriteResponse>();
             foreach (var favourite in _favoriteRepository.GetFavoritesByUserId(userId))
             {
                 favoriteResponses.Add(new FavoriteResponse(favourite));
             }
-            return favoriteResponses;
+            return new PaginationResponse<FavoriteResponse>(favoriteResponses, pageNo, pageSize);
         }
 
         public FavoriteResponse CheckFavorite(int bookId, int userId)

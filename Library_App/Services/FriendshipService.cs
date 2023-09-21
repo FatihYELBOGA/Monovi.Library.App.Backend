@@ -3,6 +3,7 @@ using Library_App.DTO.Responses;
 using Library_App.Models;
 using Library_App.Repositories;
 using Library_App.Enumerations;
+using Library_App.Pagination;
 
 namespace Library_App.Services
 {
@@ -16,7 +17,7 @@ namespace Library_App.Services
             _friendshipRepository = friendshipRepository;
         }
 
-        public List<UserResponse> GetAllFriendsByUserId(int userId)
+        public PaginationResponse<UserResponse> GetAllFriendsByUserId(int userId, int pageNo, int pageSize)
         {
             List<UserResponse> userResponses = new List<UserResponse>();
             foreach (var friend in _friendshipRepository.GetAllFriendsByUserId(userId))
@@ -27,26 +28,26 @@ namespace Library_App.Services
                 if (friend.FriendTwoId == userId)
                     userResponses.Add(new UserResponse(friend.FriendOne));
             }
-            return userResponses;
+            return new PaginationResponse<UserResponse>(userResponses, pageNo, pageSize);
         }
 
-        public List<UserResponse> GetAllFriendRequestsByUserId(int userId)
+        public PaginationResponse<UserResponse> GetAllFriendRequestsByUserId(int userId, int pageNo, int pageSize)
         {
             List<UserResponse> userResponses = new List<UserResponse>();
             foreach (var friend in _friendshipRepository.GetAllFriendRequestsByUserId(userId))
             {
                 userResponses.Add(new UserResponse(friend.FriendOne));
             }
-            return userResponses;
+            return new PaginationResponse<UserResponse>(userResponses, pageNo, pageSize);
         }
 
-        public RequestStatus CheckFriendship(int user1, int user2)
+        public FriendshipResponse CheckFriendship(int user1, int user2)
         {
             UserFriends foundFriendship = _friendshipRepository.CheckFriendship(user1, user2);
             if (foundFriendship != null)
-                return foundFriendship.RequestStatus;
+                return new FriendshipResponse(foundFriendship);
 
-            return RequestStatus.NONE;
+            return null;
         }
 
         public FriendshipResponse Create(int user1, int user2)

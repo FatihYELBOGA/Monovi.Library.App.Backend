@@ -1,6 +1,7 @@
 ﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
 using Library_App.Models;
+using Library_App.Pagination;
 using Library_App.Repositories;
 
 namespace Library_App.Services
@@ -15,14 +16,14 @@ namespace Library_App.Services
             _writerRepository = writerRepository;
         }
 
-        public List<WriterResponse> GetAll()
+        public PaginationResponse<WriterResponse> GetAll(int pageNo, int pageSize)
         {
             List<WriterResponse> writerResponses = new List<WriterResponse>();
             foreach (var writer in _writerRepository.GetAll())
             {
                 writerResponses.Add(new WriterResponse(writer));
             }
-            return writerResponses;
+            return new PaginationResponse<WriterResponse>(writerResponses, pageNo, pageSize);
         }
 
         public List<WriterResponse> GetAllNames()

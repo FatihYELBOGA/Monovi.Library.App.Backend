@@ -1,5 +1,6 @@
 ﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
+using Library_App.Pagination;
 using Library_App.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +19,9 @@ namespace Library_App.Controllers
         }
 
         [HttpGet("/users")]
-        public List<UserResponse> GetAll()
+        public PaginationResponse<UserResponse> GetAll([FromQuery] int pageNo, [FromQuery] int pageSize)
         {
-            return _userService.GetAll();
+            return _userService.GetAll(pageNo, pageSize);
         }
 
         [HttpGet("/users/{id}")]

@@ -1,8 +1,8 @@
-﻿using Library_App.DTO.Requests;
-using Library_App.DTO.Responses;
+﻿using Library_App.DTO.Responses;
 using Library_App.Services;
 using Microsoft.AspNetCore.Mvc;
 using Library_App.Enumerations;
+using Library_App.Pagination;
 
 namespace Library_App.Controllers
 {
@@ -19,19 +19,19 @@ namespace Library_App.Controllers
         }
 
         [HttpGet("/friends/{userId}")]
-        public List<UserResponse> GetAllFriendsByUserId(int userId)
+        public PaginationResponse<UserResponse> GetAllFriendsByUserId(int userId, [FromQuery] int pageNo, [FromQuery] int pageSize)
         {
-            return _friendshipService.GetAllFriendsByUserId(userId);
+            return _friendshipService.GetAllFriendsByUserId(userId, pageNo, pageSize);
         }
 
         [HttpGet("/friends/waiting/{userId}")]
-        public List<UserResponse> GetAllFriendRequestsByUserId(int userId)
+        public PaginationResponse<UserResponse> GetAllFriendRequestsByUserId(int userId, [FromQuery] int pageNo, [FromQuery] int pageSize)
         {
-            return _friendshipService.GetAllFriendRequestsByUserId(userId);
+            return _friendshipService.GetAllFriendRequestsByUserId(userId, pageNo, pageSize);
         }
 
         [HttpGet("/friends")]
-        public RequestStatus CheckFriendship([FromQuery] int user1, [FromQuery] int user2)
+        public FriendshipResponse CheckFriendship([FromQuery] int user1, [FromQuery] int user2)
         {
             return _friendshipService.CheckFriendship(user1, user2);
         }

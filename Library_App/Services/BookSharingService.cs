@@ -1,6 +1,7 @@
 ﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
 using Library_App.Models;
+using Library_App.Pagination;
 using Library_App.Repositories;
 using System.Security.Cryptography.Xml;
 
@@ -16,14 +17,14 @@ namespace Library_App.Services
             _bookSharingRepository = bookSharingRepository;
         }
 
-        public List<BookSharingResponse> GetAllBookSharings(int userId)
+        public PaginationResponse<BookSharingResponse> GetAllBookSharings(int userId, int pageNo, int pageSize)
         {
             List<BookSharingResponse> bookSharingResponses = new List<BookSharingResponse>();   
             foreach (var sharing in _bookSharingRepository.GetAllBookSharings(userId))
             {
                 bookSharingResponses.Add(new BookSharingResponse(sharing));
             }
-            return bookSharingResponses;
+            return new PaginationResponse<BookSharingResponse>(bookSharingResponses, pageNo, pageSize); ;
         }
 
         public bool CheckBookSharing(int user1, int user2, int bookId)

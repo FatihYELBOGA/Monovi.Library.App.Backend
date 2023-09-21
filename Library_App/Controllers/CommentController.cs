@@ -1,7 +1,7 @@
 ﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
+using Library_App.Pagination;
 using Library_App.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library_App.Controllers
@@ -19,9 +19,9 @@ namespace Library_App.Controllers
         }
 
         [HttpGet("/comments/{bookId}")]
-        public List<CommentResponse> GetByBookId(int bookId)
+        public PaginationResponse<CommentResponse> GetByBookId(int bookId, [FromQuery] int pageNo, [FromQuery] int pageSize)
         {
-            return _commentService.GetByBookId(bookId);
+            return _commentService.GetByBookId(bookId, pageNo, pageSize);
         }
 
         [HttpPost("/comments")]

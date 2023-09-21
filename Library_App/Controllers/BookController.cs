@@ -1,7 +1,7 @@
 ﻿using Library_App.DTO.Requests;
 using Library_App.DTO.Responses;
+using Library_App.Pagination;
 using Library_App.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library_App.Controllers
@@ -19,9 +19,9 @@ namespace Library_App.Controllers
         }
 
         [HttpGet("/books")]
-        public List<BookResponse> GetAll()
+        public PaginationResponse<BookResponse> GetAll([FromQuery] int pageNo, [FromQuery] int pageSize)
         {
-            return _bookService.GetAll();
+            return _bookService.GetAll(pageNo, pageSize);
         }
 
         [HttpGet("/books/{id}")]
@@ -31,9 +31,9 @@ namespace Library_App.Controllers
         }
 
         [HttpGet("/books/users/{userId}")]
-        public List<BookResponse> GetAllByUserId(int userId)
+        public PaginationResponse<BookResponse> GetAllByUserId(int userId, [FromQuery] int pageNo, [FromQuery] int pageSize)
         {
-            return _bookService.GetAllByUserId(userId);
+            return _bookService.GetAllByUserId(userId, pageNo, pageSize);
         }
 
         [HttpPost("/books")]
