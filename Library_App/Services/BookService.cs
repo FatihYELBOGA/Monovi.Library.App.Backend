@@ -16,7 +16,17 @@ namespace Library_App.Services
             _bookRepository = bookRepository;
         }
 
-        public PaginationResponse<BookResponse> GetAll(int pageNo, int pageSize)
+        public List<BookResponse> GetAll()
+        {
+            List<BookResponse> bookResponses = new List<BookResponse>();
+            foreach (var book in _bookRepository.GetAll())
+            {
+                bookResponses.Add(new BookResponse(book));
+            }
+            return bookResponses;
+        }
+
+        public PaginationResponse<BookResponse> GetAllByPagination(int pageNo, int pageSize)
         {
             List<BookResponse> bookResponses = new List<BookResponse>();
             foreach (var book in _bookRepository.GetAll())
@@ -166,6 +176,7 @@ namespace Library_App.Services
         {
             return _bookRepository.RemoveById(id);
         }
+
 
     }
 

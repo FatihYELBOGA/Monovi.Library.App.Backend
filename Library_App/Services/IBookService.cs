@@ -6,7 +6,8 @@ namespace Library_App.Services
 {
     public interface IBookService
     {
-        public PaginationResponse<BookResponse> GetAll(int pageNo, int pageSize);
+        public List<BookResponse> GetAll();
+        public PaginationResponse<BookResponse> GetAllByPagination(int pageNo, int pageSize);
         public BookResponse GetById(int id);
         public PaginationResponse<BookResponse> GetAllByUserId(int userId, int pageNo, int pageSize);
         public BookResponse Create(BookRequest bookRequest);

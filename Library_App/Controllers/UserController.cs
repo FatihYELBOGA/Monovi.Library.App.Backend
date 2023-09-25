@@ -19,9 +19,15 @@ namespace Library_App.Controllers
         }
 
         [HttpGet("/users")]
-        public PaginationResponse<UserResponse> GetAll([FromQuery] int pageNo, [FromQuery] int pageSize)
+        public List<UserResponse> GetAllByPagination()
         {
-            return _userService.GetAll(pageNo, pageSize);
+            return _userService.GetAll();
+        }
+
+        [HttpGet("/users/pagination")]
+        public PaginationResponse<UserResponse> GetAllByPagination([FromQuery] int pageNo, [FromQuery] int pageSize)
+        {
+            return _userService.GetAllByPagination(pageNo, pageSize);
         }
 
         [HttpGet("/users/{id}")]

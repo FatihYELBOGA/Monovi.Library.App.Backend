@@ -16,7 +16,18 @@ namespace Library_App.Services
             _writerRepository = writerRepository;
         }
 
-        public PaginationResponse<WriterResponse> GetAll(int pageNo, int pageSize)
+        public List<WriterResponse> GetAll()
+        {
+
+            List<WriterResponse> writerResponses = new List<WriterResponse>();
+            foreach (var writer in _writerRepository.GetAll())
+            {
+                writerResponses.Add(new WriterResponse(writer));
+            }
+            return writerResponses;
+        }
+
+        public PaginationResponse<WriterResponse> GetAllByPagination(int pageNo, int pageSize)
         {
             List<WriterResponse> writerResponses = new List<WriterResponse>();
             foreach (var writer in _writerRepository.GetAll())

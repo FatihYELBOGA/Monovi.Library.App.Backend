@@ -16,7 +16,17 @@ namespace Library_App.Services
             _userRepository = userRepository;
         }
 
-        public PaginationResponse<UserResponse> GetAll(int pageNo, int pageSize)
+        public List<UserResponse> GetAll()
+        {
+            List<UserResponse> userResponses = new List<UserResponse>();
+            foreach (var user in _userRepository.GetAll())
+            {
+                userResponses.Add(new UserResponse(user));
+            }
+            return userResponses;
+        }
+
+        public PaginationResponse<UserResponse> GetAllByPagination(int pageNo, int pageSize)
         {
             List<UserResponse> userResponses = new List<UserResponse>();
             foreach (var user in _userRepository.GetAll())

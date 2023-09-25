@@ -18,10 +18,17 @@ namespace Library_App.Controllers
             _bookService = bookService;
         }
 
+
         [HttpGet("/books")]
-        public PaginationResponse<BookResponse> GetAll([FromQuery] int pageNo, [FromQuery] int pageSize)
+        public List<BookResponse> GetAll()
         {
-            return _bookService.GetAll(pageNo, pageSize);
+            return _bookService.GetAll();
+        }
+
+        [HttpGet("/books/pagination")]
+        public PaginationResponse<BookResponse> GetAllByPagination([FromQuery] int pageNo, [FromQuery] int pageSize)
+        {
+            return _bookService.GetAllByPagination(pageNo, pageSize);
         }
 
         [HttpGet("/books/{id}")]

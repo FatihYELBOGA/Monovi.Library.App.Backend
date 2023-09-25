@@ -6,8 +6,8 @@ bu işlemin davranışını düzenleyebilirsiniz. Bununla ilgili daha fazla bilg
 <Project>
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAq/JeZzDQn06oSzcD5Pm8IgAAAAACAAAAAAAQZgAAAAEAACAAAACcp9eHqQfxcF2+0dlKj5tTdbYbG286omeXe/GQe1Q9JwAAAAAOgAAAAAIAACAAAAD6cxLFU0zNdaCPyBnb3AHdl72f5f3WXY8/LY4+103VmSAAAACqeFaGFHE6thmJA4ek44DWZChKlHW0RaZNGNtz0BoVC0AAAABBWJkMdFg1NVmJGistSsHw0stoukfqVrf9+Q+r/k2ao3U7ChAKlHEunpMMTpxCvS2L0ywy5Gr/tSwguTR4vNnE</EncryptedPassword>
-    <History>True|2023-09-20T16:42:29.3945404Z;True|2023-09-19T21:06:35.1915280+03:00;</History>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAq/JeZzDQn06oSzcD5Pm8IgAAAAACAAAAAAAQZgAAAAEAACAAAAAHXx1eqtgxD0rp6aPhngExEojri2bbkgFc87AJNXfIwAAAAAAOgAAAAAIAACAAAADc33gc4QjxItEN+Osz+kQOH82FjQjfJlnsNiVt83P59yAAAADiLhLLVFcXyoE57P9BgThK0MbwWrAJV4tIkL8nL3pHUkAAAACrvLo4gTjOM+X/e5U6l1gPX/LAjVCwFF4faFj6U7E+kLDBQpjxu+rwLHJlssBah+DCMNyTkT+tctxV7bDuTPZz</EncryptedPassword>
+    <History>True|2023-09-25T13:58:49.2537784Z;True|2023-09-25T13:09:17.9243469+03:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

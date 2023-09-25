@@ -6,7 +6,8 @@ namespace Library_App.Services
 {
     public interface IWriterService
     {
-        public PaginationResponse<WriterResponse> GetAll(int pageNo, int pageSize);
+        public List<WriterResponse> GetAll();
+        public PaginationResponse<WriterResponse> GetAllByPagination(int pageNo, int pageSize);
         public List<WriterResponse> GetAllNames();
         public WriterResponse GetById(int id);
         public WriterResponse Create(WriterRequest writerRequest);

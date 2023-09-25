@@ -19,9 +19,15 @@ namespace Library_App.Controllers
         }
 
         [HttpGet("/writers")]
+        public List<WriterResponse> GetAll()
+        {
+            return _writerService.GetAll();
+        }
+
+        [HttpGet("/writers/pagination")]
         public PaginationResponse<WriterResponse> GetAll([FromQuery] int pageNo, [FromQuery] int pageSize)
         {
-            return _writerService.GetAll(pageNo, pageSize);
+            return _writerService.GetAllByPagination(pageNo, pageSize);
         }
 
         [HttpGet("/writers/names")]
