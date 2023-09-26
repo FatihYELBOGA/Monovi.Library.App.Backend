@@ -350,21 +350,23 @@ namespace Library_App.Migrations
                 {
                     b.HasOne("Library_App.Models.File", "Content")
                         .WithOne("BookContent")
-                        .HasForeignKey("Library_App.Models.Book", "ContentId");
+                        .HasForeignKey("Library_App.Models.Book", "ContentId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Library_App.Models.File", "Photo")
                         .WithOne("Book")
-                        .HasForeignKey("Library_App.Models.Book", "PhotoId");
+                        .HasForeignKey("Library_App.Models.Book", "PhotoId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Library_App.Models.User", "User")
                         .WithMany("Books")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Library_App.Models.Writer", "Writer")
                         .WithMany("Books")
                         .HasForeignKey("WriterId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Content");
 
@@ -379,11 +381,13 @@ namespace Library_App.Migrations
                 {
                     b.HasOne("Library_App.Models.Book", "Book")
                         .WithMany("BookComments")
-                        .HasForeignKey("BookId");
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Library_App.Models.User", "User")
                         .WithMany("BookComments")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Book");
 
@@ -394,11 +398,13 @@ namespace Library_App.Migrations
                 {
                     b.HasOne("Library_App.Models.Book", "Book")
                         .WithMany("BookRatings")
-                        .HasForeignKey("BookId");
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Library_App.Models.User", "User")
                         .WithMany("BookRatings")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Book");
 
@@ -409,11 +415,13 @@ namespace Library_App.Migrations
                 {
                     b.HasOne("Library_App.Models.Book", "Book")
                         .WithMany("FavoriteBooks")
-                        .HasForeignKey("BookId");
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Library_App.Models.User", "User")
                         .WithMany("FavoriteBooks")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Book");
 
@@ -425,6 +433,7 @@ namespace Library_App.Migrations
                     b.HasOne("Library_App.Models.User", "User")
                         .WithOne("RefreshToken")
                         .HasForeignKey("Library_App.Models.RefreshToken", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -435,15 +444,17 @@ namespace Library_App.Migrations
                     b.HasOne("Library_App.Models.Book", "Book")
                         .WithMany("SharingBooks")
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Library_App.Models.User", "ReceiverUser")
                         .WithMany("ReceiverBooks")
-                        .HasForeignKey("ReceiverUserId");
+                        .HasForeignKey("ReceiverUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Library_App.Models.User", "SenderUser")
                         .WithMany("SenderBooks")
-                        .HasForeignKey("SenderUserId");
+                        .HasForeignKey("SenderUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Book");
 
@@ -456,7 +467,8 @@ namespace Library_App.Migrations
                 {
                     b.HasOne("Library_App.Models.File", "Profil")
                         .WithOne("User")
-                        .HasForeignKey("Library_App.Models.User", "ProfilId");
+                        .HasForeignKey("Library_App.Models.User", "ProfilId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Profil");
                 });
@@ -465,11 +477,13 @@ namespace Library_App.Migrations
                 {
                     b.HasOne("Library_App.Models.User", "FriendOne")
                         .WithMany("UserFriendsOne")
-                        .HasForeignKey("FriendOneId");
+                        .HasForeignKey("FriendOneId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Library_App.Models.User", "FriendTwo")
                         .WithMany("UserFriendsTwo")
-                        .HasForeignKey("FriendTwoId");
+                        .HasForeignKey("FriendTwoId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("FriendOne");
 
@@ -480,7 +494,8 @@ namespace Library_App.Migrations
                 {
                     b.HasOne("Library_App.Models.File", "Profil")
                         .WithOne("Writer")
-                        .HasForeignKey("Library_App.Models.Writer", "ProfilId");
+                        .HasForeignKey("Library_App.Models.Writer", "ProfilId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Profil");
                 });

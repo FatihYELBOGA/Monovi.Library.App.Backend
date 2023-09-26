@@ -42,6 +42,12 @@ namespace Library_App.Controllers
             return _userService.Update(id, userRequest);
         }
 
+        [HttpDelete("/users/{id}")]
+        public bool RemoveById(int id)
+        {
+            return _userService.RemoveById(id);
+        }
+
     }
 
 }

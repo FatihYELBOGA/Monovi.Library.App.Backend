@@ -55,6 +55,16 @@ namespace Library_App.Services
             return new PaginationResponse<BookResponse>(bookResponses, pageNo, pageSize);
         }
 
+        public PaginationResponse<BookResponse> GetAllByWriterId(int writerId, int pageNo, int pageSize)
+        {
+            List<BookResponse> bookResponses = new List<BookResponse>();
+            foreach (var book in _bookRepository.GetAllByWriterId(writerId))
+            {
+                bookResponses.Add(new BookResponse(book));
+            }
+            return new PaginationResponse<BookResponse>(bookResponses, pageNo, pageSize);
+        }
+
         public BookResponse Create(BookRequest bookRequest)
         {
             Models.File photo = null;
@@ -176,7 +186,6 @@ namespace Library_App.Services
         {
             return _bookRepository.RemoveById(id);
         }
-
 
     }
 

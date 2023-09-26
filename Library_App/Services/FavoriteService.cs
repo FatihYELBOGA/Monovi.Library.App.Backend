@@ -42,7 +42,7 @@ namespace Library_App.Services
             FavoriteBooks addedFavorite = new FavoriteBooks()
             {
                 BookId = favoriteRequest.BookId,
-                UserId = favoriteRequest.UsertId
+                UserId = favoriteRequest.UserId
             };
 
             FavoriteBooks returnedBook = _favoriteRepository.Create(addedFavorite);

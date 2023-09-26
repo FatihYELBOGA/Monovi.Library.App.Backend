@@ -10,6 +10,7 @@ namespace Library_App.Services
         public PaginationResponse<UserResponse> GetAllByPagination(int pageNo, int pageSize);
         public UserResponse GetById(int id);
         public UserResponse Update(int id, UserRequest userRequest);
+        public bool RemoveById(int id);
 
     }
 

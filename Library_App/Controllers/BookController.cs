@@ -43,6 +43,12 @@ namespace Library_App.Controllers
             return _bookService.GetAllByUserId(userId, pageNo, pageSize);
         }
 
+        [HttpGet("/books/writers/{writerId}")]
+        public PaginationResponse<BookResponse> GetAllByWriterId(int writerId, [FromQuery] int pageNo, [FromQuery] int pageSize)
+        {
+            return _bookService.GetAllByWriterId(writerId, pageNo, pageSize);
+        }
+
         [HttpPost("/books")]
         public BookResponse Create([FromForm] BookRequest bookRequest)
         {
@@ -60,7 +66,6 @@ namespace Library_App.Controllers
         {
             return _bookService.RemoveById(id);
         }
-
 
     }
 

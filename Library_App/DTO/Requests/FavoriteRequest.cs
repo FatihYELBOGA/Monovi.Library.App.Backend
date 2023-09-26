@@ -3,7 +3,7 @@
     public class FavoriteRequest
     {
         public int BookId { get; set; }
-        public int UsertId { get; set; }
+        public int UserId { get; set; }
 
     }
 }

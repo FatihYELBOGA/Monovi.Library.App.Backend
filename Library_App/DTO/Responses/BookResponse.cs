@@ -56,6 +56,7 @@ namespace Library_App.DTO.Responses
             if (book.Writer != null)
             {
                 WriterResponse writerResponse = new WriterResponse();
+                writerResponse.Id = book.Writer.Id;
                 writerResponse.FirstName = book.Writer.FirstName;
                 writerResponse.LastName = book.Writer.LastName;
                 writerResponse.Gender = book.Writer.Gender;

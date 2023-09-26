@@ -83,6 +83,11 @@ namespace Library_App.Services
             return new UserResponse(returnedUser);
         }
 
+        public bool RemoveById(int id)
+        {
+            return _userRepository.RemoveById(id);
+        }
+
     }
 
 }

@@ -31,6 +31,9 @@ namespace Library_App.Repositories
                 .Include(b => b.Writer)
                 .Include(b => b.Photo)
                 .Include(b => b.Content)
+                .Include(b => b.SharingBooks)
+                .Include(b => b.FavoriteBooks)
+                .Include(b => b.BookComments)
                 .Include(b => b.BookRatings)
                 .FirstOrDefault();
         }
@@ -39,6 +42,17 @@ namespace Library_App.Repositories
         {
             return _database.Books
                 .Where(b => b.UserId == userId)
+                .Include(b => b.User)
+                .Include(b => b.Writer)
+                .Include(b => b.Photo)
+                .Include(b => b.BookRatings)
+                .ToList();
+        }
+
+        public List<Book> GetAllByWriterId(int writerId)
+        {
+            return _database.Books
+                .Where(b => b.WriterId == writerId)
                 .Include(b => b.User)
                 .Include(b => b.Writer)
                 .Include(b => b.Photo)
@@ -62,9 +76,58 @@ namespace Library_App.Repositories
 
         public bool RemoveById(int id)
         {
-            Book deletedBook = _database.Books.Where(b => b.Id == id).FirstOrDefault();
+            Book deletedBook = this.GetById(id);
+
             if(deletedBook != null)
             {
+                if (deletedBook.Photo != null)
+                {
+                    _database.Files.Remove(deletedBook.Photo);
+                    _database.SaveChanges();
+                }
+
+                if (deletedBook.Content != null)
+                {
+                    _database.Files.Remove(deletedBook.Content);
+                    _database.SaveChanges();
+                }
+
+                if (deletedBook.SharingBooks != null)
+                {
+                    foreach (var sharingBook in deletedBook.SharingBooks.ToList())
+                    {
+                        _database.SharingBooks.Remove(sharingBook);
+                        _database.SaveChanges();
+                    }
+                }
+
+                if (deletedBook.FavoriteBooks != null)
+                {
+                    foreach (var favoriteBook in deletedBook.FavoriteBooks.ToList())
+                    {
+                        _database.FavoriteBooks.Remove(favoriteBook);
+                        _database.SaveChanges();
+                    }
+                }
+
+                if (deletedBook.BookComments != null)
+                {
+                    foreach (var bookComment in deletedBook.BookComments.ToList())
+                    {
+                        _database.BookComments.Remove(bookComment);
+                        _database.SaveChanges();
+                    }
+                }
+
+                if (deletedBook.BookRatings != null)
+                {
+                    foreach (var bookRating in deletedBook.BookRatings.ToList())
+                    {
+                        _database.BookRatings.Remove(bookRating);
+                        _database.SaveChanges();
+                    }
+                }
+
                 _database.Books.Remove(deletedBook);
                 _database.SaveChanges();
                 return true;

@@ -7,6 +7,7 @@ namespace Library_App.Repositories
         public List<User> GetAll();
         public User GetById(int id);
         public User Update(User user);
+        public bool RemoveById(int id);
 
     }
 

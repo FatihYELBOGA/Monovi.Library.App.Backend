@@ -8,10 +8,12 @@ namespace Library_App.Repositories
     {
 
         private readonly Database _database;
+        private readonly IBookRepository _bookRepository;
 
-        public WriterRepository(Database database)
+        public WriterRepository(Database database, IBookRepository bookRepository)
         {
             _database = database;
+            _bookRepository = bookRepository;
         }
 
         public List<Writer> GetAll()
@@ -56,9 +58,24 @@ namespace Library_App.Repositories
 
         public bool RemoveById(int id)
         {
-            Writer deletedWriter = _database.Writers.Where(w => w.Id == id).FirstOrDefault();
+            Writer deletedWriter = this.GetById(id);
+
             if (deletedWriter != null)
             {
+                if (deletedWriter.Profil != null)
+                {
+                    _database.Remove(deletedWriter.Profil);
+                    _database.SaveChanges();
+                }
+
+                if (deletedWriter.Books != null)
+                {
+                    foreach (var book in deletedWriter.Books.ToList())
+                    {
+                        _bookRepository.RemoveById(book.Id);
+                    }
+                }
+
                 _database.Writers.Remove(deletedWriter);
                 _database.SaveChanges();
                 return true;
