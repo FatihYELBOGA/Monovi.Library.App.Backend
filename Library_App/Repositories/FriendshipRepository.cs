@@ -59,14 +59,14 @@ namespace Library_App.Repositories
         public UserFriends CheckFriendship(int user1, int user2)
         {
             UserFriends foundFrienship = _database.UserFriends
-                .Where(uf => uf.FriendOneId == user1 && uf.FriendTwoId == user2 && uf.RequestStatus == RequestStatus.APPROVED)
+                .Where(uf => uf.FriendOneId == user1 && uf.FriendTwoId == user2)
                 .FirstOrDefault();
 
             if (foundFrienship != null)
                 return foundFrienship;
 
             foundFrienship = _database.UserFriends
-                .Where(uf => uf.FriendOneId == user2 && uf.FriendTwoId == user1 && uf.RequestStatus == RequestStatus.APPROVED)
+                .Where(uf => uf.FriendOneId == user2 && uf.FriendTwoId == user1)
                 .FirstOrDefault();
 
             if (foundFrienship != null)
