@@ -65,13 +65,6 @@ namespace Library_App.Repositories
             if (foundFrienship != null)
                 return foundFrienship;
 
-            foundFrienship = _database.UserFriends
-                .Where(uf => uf.FriendOneId == user2 && uf.FriendTwoId == user1)
-                .FirstOrDefault();
-
-            if (foundFrienship != null)
-                return foundFrienship;
-
             return null;
         }
 

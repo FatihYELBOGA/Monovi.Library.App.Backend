@@ -67,7 +67,9 @@ namespace Library_App.Services
                         };
                     }
                 }
-                updatedUser.Profil = profile;
+                updatedUser.Profil.Name = profile.Name;
+                updatedUser.Profil.Type = profile.Type;
+                updatedUser.Profil.Content = profile.Content;
             }
 
             updatedUser.FirstName = userRequest.FirstName;

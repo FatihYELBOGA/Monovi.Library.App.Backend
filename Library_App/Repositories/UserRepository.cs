@@ -36,6 +36,7 @@ namespace Library_App.Repositories
                 .Include(u => u.BookRatings)
                 .Include(u => u.UserFriendsOne)
                 .Include(u => u.UserFriendsTwo)
+                .Include(u => u.RefreshToken)
                 .FirstOrDefault();
         }
 
@@ -129,6 +130,9 @@ namespace Library_App.Repositories
                         _database.SaveChanges();
                     }
                 }
+
+                _database.RefreshTokens.Remove(deletedUser.RefreshToken);
+                _database.SaveChanges();
 
                 _database.Users.Remove(deletedUser);
                 _database.SaveChanges();
