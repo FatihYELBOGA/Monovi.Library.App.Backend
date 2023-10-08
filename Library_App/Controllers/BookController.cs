@@ -18,7 +18,6 @@ namespace Library_App.Controllers
             _bookService = bookService;
         }
 
-
         [HttpGet("/books")]
         public List<BookResponse> GetAll()
         {
