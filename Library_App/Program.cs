@@ -1,4 +1,6 @@
 using Library_App.Configurations;
+using Library_App.DTO.Requests;
+using Library_App.GraphQL.Writer;
 using Library_App.Repositories;
 using Library_App.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,6 +12,7 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using System.Text.Json.Serialization;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,6 +22,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
+// swagger oauth2 configuration
 builder.Services.AddSwaggerGen(
     options =>
     {
@@ -34,6 +38,7 @@ builder.Services.AddSwaggerGen(
     }
 );
 
+// database configuration
 builder.Services.AddDbContext<Database>(
     options => {
         options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
@@ -42,6 +47,7 @@ builder.Services.AddDbContext<Database>(
     }
 );
 
+// enum converter and ignore cycle
 builder.Services.AddControllers().AddJsonOptions(
     options =>
     {
@@ -51,6 +57,7 @@ builder.Services.AddControllers().AddJsonOptions(
     }
 );
 
+// authentication configuration
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(
         options =>
@@ -68,6 +75,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         }
     );
 
+
+// dependencies or containers
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 builder.Services.AddTransient<IBookService, BookService>();
@@ -87,6 +96,11 @@ builder.Services.AddTransient<IFriendshipRepository, FriendshipRepository>();
 builder.Services.AddTransient<IBookSharingService, BookSharingService>();
 builder.Services.AddTransient<IBookSharingRepository, BookSharingRepository>();
 
+// graphQL types and queries 
+builder.Services.AddTransient<WriterQuery>();
+builder.Services.AddTransient<WriterMutation>();
+builder.Services.AddGraphQL(g => SchemaBuilder.New().AddServices(g).AddType<WriterType>().AddQueryType<WriterQuery>().AddMutationType<WriterMutation>().Create());
+
 var app = builder.Build();
 
 Database.Seed(app.Services.CreateScope().ServiceProvider.GetRequiredService<Database>());
@@ -98,16 +112,20 @@ app.UseSwagger();
 app.UseSwaggerUI();
 // }
 
+// cors configuration
 app.UseCors(builder => builder
     .AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader()
 );
 
+// graphQL configuration
+app.MapGraphQL("/api");
+app.UseGraphQLAltair();
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllers();
