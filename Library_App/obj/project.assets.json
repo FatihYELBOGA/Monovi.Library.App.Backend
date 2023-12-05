@@ -5431,11 +5431,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Library.App.Backend\\Library_App\\Library_App.csproj",
+      "projectUniqueName": "C:\\Users\\Fatih YELBOĞA\\Documents\\GitHub\\Monovi.Library.App.Backend\\Library_App\\Library_App.csproj",
       "projectName": "Library_App",
-      "projectPath": "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Library.App.Backend\\Library_App\\Library_App.csproj",
+      "projectPath": "C:\\Users\\Fatih YELBOĞA\\Documents\\GitHub\\Monovi.Library.App.Backend\\Library_App\\Library_App.csproj",
       "packagesPath": "C:\\Users\\Fatih YELBOĞA\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Fatih YELBOĞA\\Desktop\\GitHub\\Monovi.Library.App.Backend\\Library_App\\obj\\",
+      "outputPath": "C:\\Users\\Fatih YELBOĞA\\Documents\\GitHub\\Monovi.Library.App.Backend\\Library_App\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Fatih YELBOĞA\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5518,7 +5518,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
